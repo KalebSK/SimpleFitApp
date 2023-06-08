@@ -1,0 +1,100 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/client"
+  previewFeatures = ["deno"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ExerciseProgresses {
+  id         String    @id @db.Uuid
+  date       DateTime  @db.Date
+  prevRep    Int?
+  newRep     Int?
+  prevWeight Int?
+  newWeight  Int?
+  prevDur    Float?
+  newDur     Float?
+  Users      Users     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Exercises  Exercises @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ExerciseProgresses_id_fkey1")
+}
+
+model Exercises {
+  id                     String                   @id @db.Uuid
+  name                   String                   @default("an exercise") @db.VarChar(255)
+  description            String?                  @default("this is an exercise")
+  muscle_group           MuscleGroup?
+  exercise_type          ExerciseType             @default(Cardio)
+  ExerciseProgresses     ExerciseProgresses?
+  Exercises_WorkoutPlans Exercises_WorkoutPlans[]
+  Users_Exercises        Users_Exercises[]
+}
+
+model Exercises_WorkoutPlans {
+  Exercises_id    String       @db.Uuid
+  WorkoutPlans_id String       @db.Uuid
+  Exercises       Exercises    @relation(fields: [Exercises_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  WorkoutPlans    WorkoutPlans @relation(fields: [WorkoutPlans_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([Exercises_id, WorkoutPlans_id])
+}
+
+model Users {
+  id                 String               @id @db.Uuid
+  username           String               @unique @db.VarChar(30)
+  email              String               @unique @db.VarChar(255)
+  created_at         DateTime?            @default(now()) @db.Timestamp(6)
+  profile_pic_uri    String?
+  ExerciseProgresses ExerciseProgresses?
+  Users_Exercises    Users_Exercises[]
+  Users_WorkoutPlans Users_WorkoutPlans[]
+}
+
+model Users_Exercises {
+  Users_id     String    @db.Uuid
+  Exercises_id String    @db.Uuid
+  Exercises    Exercises @relation(fields: [Exercises_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Users        Users     @relation(fields: [Users_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([Users_id, Exercises_id])
+}
+
+model Users_WorkoutPlans {
+  Users_id        String       @db.Uuid
+  WorkoutPlans_id String       @db.Uuid
+  Users           Users        @relation(fields: [Users_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  WorkoutPlans    WorkoutPlans @relation(fields: [WorkoutPlans_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([Users_id, WorkoutPlans_id])
+}
+
+model WorkoutPlans {
+  id                     String                   @id @db.Uuid
+  name                   String                   @db.VarChar(255)
+  description            String?                  @default("a workout plan")
+  Exercises_WorkoutPlans Exercises_WorkoutPlans[]
+  Users_WorkoutPlans     Users_WorkoutPlans[]
+}
+
+model nessie_migrations {
+  id         BigInt    @id @default(autoincrement())
+  file_name  String?   @unique @db.VarChar(100)
+  created_at DateTime? @default(now()) @db.Timestamp(0)
+}
+
+enum ExerciseType {
+  Cardio
+  Muscle
+}
+
+enum MuscleGroup {
+  Chest
+  Back
+  Legs
+  Shoulders
+  Arms
+  Abs
+}
