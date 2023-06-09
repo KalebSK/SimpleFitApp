@@ -56,6 +56,7 @@ export type Users = {
   id: string
   username: string
   email: string
+  password: string
   created_at: Date | null
   profile_pic_uri: string | null
 }
@@ -4027,6 +4028,7 @@ export namespace Prisma {
     id: string | null
     username: string | null
     email: string | null
+    password: string | null
     created_at: Date | null
     profile_pic_uri: string | null
   }
@@ -4035,6 +4037,7 @@ export namespace Prisma {
     id: string | null
     username: string | null
     email: string | null
+    password: string | null
     created_at: Date | null
     profile_pic_uri: string | null
   }
@@ -4043,6 +4046,7 @@ export namespace Prisma {
     id: number
     username: number
     email: number
+    password: number
     created_at: number
     profile_pic_uri: number
     _all: number
@@ -4053,6 +4057,7 @@ export namespace Prisma {
     id?: true
     username?: true
     email?: true
+    password?: true
     created_at?: true
     profile_pic_uri?: true
   }
@@ -4061,6 +4066,7 @@ export namespace Prisma {
     id?: true
     username?: true
     email?: true
+    password?: true
     created_at?: true
     profile_pic_uri?: true
   }
@@ -4069,6 +4075,7 @@ export namespace Prisma {
     id?: true
     username?: true
     email?: true
+    password?: true
     created_at?: true
     profile_pic_uri?: true
     _all?: true
@@ -4151,6 +4158,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at: Date | null
     profile_pic_uri: string | null
     _count: UsersCountAggregateOutputType | null
@@ -4176,6 +4184,7 @@ export namespace Prisma {
     id?: boolean
     username?: boolean
     email?: boolean
+    password?: boolean
     created_at?: boolean
     profile_pic_uri?: boolean
     ExerciseProgresses?: boolean | ExerciseProgressesArgs
@@ -8770,6 +8779,7 @@ export namespace Prisma {
     id: 'id',
     username: 'username',
     email: 'email',
+    password: 'password',
     created_at: 'created_at',
     profile_pic_uri: 'profile_pic_uri'
   };
@@ -8965,6 +8975,7 @@ export namespace Prisma {
     id?: UuidFilter | string
     username?: StringFilter | string
     email?: StringFilter | string
+    password?: StringFilter | string
     created_at?: DateTimeNullableFilter | Date | string | null
     profile_pic_uri?: StringNullableFilter | string | null
     ExerciseProgresses?: XOR<ExerciseProgressesRelationFilter, ExerciseProgressesWhereInput> | null
@@ -8976,6 +8987,7 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
     ExerciseProgresses?: ExerciseProgressesOrderByWithRelationInput
@@ -8993,6 +9005,7 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
     _count?: UsersCountOrderByAggregateInput
@@ -9007,6 +9020,7 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter | string
     username?: StringWithAggregatesFilter | string
     email?: StringWithAggregatesFilter | string
+    password?: StringWithAggregatesFilter | string
     created_at?: DateTimeNullableWithAggregatesFilter | Date | string | null
     profile_pic_uri?: StringNullableWithAggregatesFilter | string | null
   }
@@ -9350,6 +9364,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
@@ -9361,6 +9376,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
@@ -9372,6 +9388,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
@@ -9383,6 +9400,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
@@ -9394,6 +9412,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
   }
@@ -9402,6 +9421,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -9410,6 +9430,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -9940,6 +9961,7 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
   }
@@ -9948,6 +9970,7 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
   }
@@ -9956,6 +9979,7 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
   }
@@ -10839,6 +10863,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
@@ -10849,6 +10874,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
@@ -10894,6 +10920,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
@@ -10904,6 +10931,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
@@ -11316,6 +11344,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
@@ -11326,6 +11355,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
@@ -11371,6 +11401,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
@@ -11381,6 +11412,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
@@ -11391,6 +11423,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
@@ -11401,6 +11434,7 @@ export namespace Prisma {
     id: string
     username: string
     email: string
+    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
@@ -11440,6 +11474,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
@@ -11450,6 +11485,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput

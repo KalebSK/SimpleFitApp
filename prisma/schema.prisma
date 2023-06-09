@@ -46,6 +46,7 @@ model Users {
   id                 String               @id @db.Uuid
   username           String               @unique @db.VarChar(30)
   email              String               @unique @db.VarChar(255)
+  password           String               @db.VarChar
   created_at         DateTime?            @default(now()) @db.Timestamp(6)
   profile_pic_uri    String?
   ExerciseProgresses ExerciseProgresses?
