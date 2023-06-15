@@ -56,9 +56,9 @@ export type Users = {
   id: string
   username: string
   email: string
-  password: string
   created_at: Date | null
   profile_pic_uri: string | null
+  password: string
 }
 
 /**
@@ -90,13 +90,13 @@ export type WorkoutPlans = {
 }
 
 /**
- * Model nessie_migrations
+ * Model RefreshTokens
  * 
  */
-export type nessie_migrations = {
-  id: bigint
-  file_name: string | null
-  created_at: Date | null
+export type RefreshTokens = {
+  id: string
+  token: string
+  userId: string
 }
 
 
@@ -312,14 +312,14 @@ export class PrismaClient<
   get workoutPlans(): Prisma.WorkoutPlansDelegate<GlobalReject>;
 
   /**
-   * `prisma.nessie_migrations`: Exposes CRUD operations for the **nessie_migrations** model.
+   * `prisma.refreshTokens`: Exposes CRUD operations for the **RefreshTokens** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Nessie_migrations
-    * const nessie_migrations = await prisma.nessie_migrations.findMany()
+    * // Fetch zero or more RefreshTokens
+    * const refreshTokens = await prisma.refreshTokens.findMany()
     * ```
     */
-  get nessie_migrations(): Prisma.nessie_migrationsDelegate<GlobalReject>;
+  get refreshTokens(): Prisma.RefreshTokensDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -796,7 +796,7 @@ export namespace Prisma {
     Users_Exercises: 'Users_Exercises',
     Users_WorkoutPlans: 'Users_WorkoutPlans',
     WorkoutPlans: 'WorkoutPlans',
-    nessie_migrations: 'nessie_migrations'
+    RefreshTokens: 'RefreshTokens'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -4028,27 +4028,27 @@ export namespace Prisma {
     id: string | null
     username: string | null
     email: string | null
-    password: string | null
     created_at: Date | null
     profile_pic_uri: string | null
+    password: string | null
   }
 
   export type UsersMaxAggregateOutputType = {
     id: string | null
     username: string | null
     email: string | null
-    password: string | null
     created_at: Date | null
     profile_pic_uri: string | null
+    password: string | null
   }
 
   export type UsersCountAggregateOutputType = {
     id: number
     username: number
     email: number
-    password: number
     created_at: number
     profile_pic_uri: number
+    password: number
     _all: number
   }
 
@@ -4057,27 +4057,27 @@ export namespace Prisma {
     id?: true
     username?: true
     email?: true
-    password?: true
     created_at?: true
     profile_pic_uri?: true
+    password?: true
   }
 
   export type UsersMaxAggregateInputType = {
     id?: true
     username?: true
     email?: true
-    password?: true
     created_at?: true
     profile_pic_uri?: true
+    password?: true
   }
 
   export type UsersCountAggregateInputType = {
     id?: true
     username?: true
     email?: true
-    password?: true
     created_at?: true
     profile_pic_uri?: true
+    password?: true
     _all?: true
   }
 
@@ -4158,9 +4158,9 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at: Date | null
     profile_pic_uri: string | null
+    password: string
     _count: UsersCountAggregateOutputType | null
     _min: UsersMinAggregateOutputType | null
     _max: UsersMaxAggregateOutputType | null
@@ -4184,10 +4184,11 @@ export namespace Prisma {
     id?: boolean
     username?: boolean
     email?: boolean
-    password?: boolean
     created_at?: boolean
     profile_pic_uri?: boolean
+    password?: boolean
     ExerciseProgresses?: boolean | ExerciseProgressesArgs
+    RefreshTokens?: boolean | RefreshTokensArgs
     Users_Exercises?: boolean | Users$Users_ExercisesArgs
     Users_WorkoutPlans?: boolean | Users$Users_WorkoutPlansArgs
     _count?: boolean | UsersCountOutputTypeArgs
@@ -4196,6 +4197,7 @@ export namespace Prisma {
 
   export type UsersInclude = {
     ExerciseProgresses?: boolean | ExerciseProgressesArgs
+    RefreshTokens?: boolean | RefreshTokensArgs
     Users_Exercises?: boolean | Users$Users_ExercisesArgs
     Users_WorkoutPlans?: boolean | Users$Users_WorkoutPlansArgs
     _count?: boolean | UsersCountOutputTypeArgs
@@ -4209,6 +4211,7 @@ export namespace Prisma {
     ? Users  & {
     [P in TruthyKeys<S['include']>]:
         P extends 'ExerciseProgresses' ? ExerciseProgressesGetPayload<S['include'][P]> | null :
+        P extends 'RefreshTokens' ? RefreshTokensGetPayload<S['include'][P]> | null :
         P extends 'Users_Exercises' ? Array < Users_ExercisesGetPayload<S['include'][P]>>  :
         P extends 'Users_WorkoutPlans' ? Array < Users_WorkoutPlansGetPayload<S['include'][P]>>  :
         P extends '_count' ? UsersCountOutputTypeGetPayload<S['include'][P]> :  never
@@ -4217,6 +4220,7 @@ export namespace Prisma {
       ? {
     [P in TruthyKeys<S['select']>]:
         P extends 'ExerciseProgresses' ? ExerciseProgressesGetPayload<S['select'][P]> | null :
+        P extends 'RefreshTokens' ? RefreshTokensGetPayload<S['select'][P]> | null :
         P extends 'Users_Exercises' ? Array < Users_ExercisesGetPayload<S['select'][P]>>  :
         P extends 'Users_WorkoutPlans' ? Array < Users_WorkoutPlansGetPayload<S['select'][P]>>  :
         P extends '_count' ? UsersCountOutputTypeGetPayload<S['select'][P]> :  P extends keyof Users ? Users[P] : never
@@ -4592,6 +4596,8 @@ export namespace Prisma {
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
     ExerciseProgresses<T extends ExerciseProgressesArgs= {}>(args?: Subset<T, ExerciseProgressesArgs>): Prisma__ExerciseProgressesClient<ExerciseProgressesGetPayload<T> | Null>;
+
+    RefreshTokens<T extends RefreshTokensArgs= {}>(args?: Subset<T, RefreshTokensArgs>): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T> | Null>;
 
     Users_Exercises<T extends Users$Users_ExercisesArgs= {}>(args?: Subset<T, Users$Users_ExercisesArgs>): Prisma.PrismaPromise<Array<Users_ExercisesGetPayload<T>>| Null>;
 
@@ -7804,353 +7810,327 @@ export namespace Prisma {
 
 
   /**
-   * Model nessie_migrations
+   * Model RefreshTokens
    */
 
 
-  export type AggregateNessie_migrations = {
-    _count: Nessie_migrationsCountAggregateOutputType | null
-    _avg: Nessie_migrationsAvgAggregateOutputType | null
-    _sum: Nessie_migrationsSumAggregateOutputType | null
-    _min: Nessie_migrationsMinAggregateOutputType | null
-    _max: Nessie_migrationsMaxAggregateOutputType | null
+  export type AggregateRefreshTokens = {
+    _count: RefreshTokensCountAggregateOutputType | null
+    _min: RefreshTokensMinAggregateOutputType | null
+    _max: RefreshTokensMaxAggregateOutputType | null
   }
 
-  export type Nessie_migrationsAvgAggregateOutputType = {
-    id: number | null
+  export type RefreshTokensMinAggregateOutputType = {
+    id: string | null
+    token: string | null
+    userId: string | null
   }
 
-  export type Nessie_migrationsSumAggregateOutputType = {
-    id: bigint | null
+  export type RefreshTokensMaxAggregateOutputType = {
+    id: string | null
+    token: string | null
+    userId: string | null
   }
 
-  export type Nessie_migrationsMinAggregateOutputType = {
-    id: bigint | null
-    file_name: string | null
-    created_at: Date | null
-  }
-
-  export type Nessie_migrationsMaxAggregateOutputType = {
-    id: bigint | null
-    file_name: string | null
-    created_at: Date | null
-  }
-
-  export type Nessie_migrationsCountAggregateOutputType = {
+  export type RefreshTokensCountAggregateOutputType = {
     id: number
-    file_name: number
-    created_at: number
+    token: number
+    userId: number
     _all: number
   }
 
 
-  export type Nessie_migrationsAvgAggregateInputType = {
+  export type RefreshTokensMinAggregateInputType = {
     id?: true
+    token?: true
+    userId?: true
   }
 
-  export type Nessie_migrationsSumAggregateInputType = {
+  export type RefreshTokensMaxAggregateInputType = {
     id?: true
+    token?: true
+    userId?: true
   }
 
-  export type Nessie_migrationsMinAggregateInputType = {
+  export type RefreshTokensCountAggregateInputType = {
     id?: true
-    file_name?: true
-    created_at?: true
-  }
-
-  export type Nessie_migrationsMaxAggregateInputType = {
-    id?: true
-    file_name?: true
-    created_at?: true
-  }
-
-  export type Nessie_migrationsCountAggregateInputType = {
-    id?: true
-    file_name?: true
-    created_at?: true
+    token?: true
+    userId?: true
     _all?: true
   }
 
-  export type Nessie_migrationsAggregateArgs = {
+  export type RefreshTokensAggregateArgs = {
     /**
-     * Filter which nessie_migrations to aggregate.
+     * Filter which RefreshTokens to aggregate.
      */
-    where?: nessie_migrationsWhereInput
+    where?: RefreshTokensWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of nessie_migrations to fetch.
+     * Determine the order of RefreshTokens to fetch.
      */
-    orderBy?: Enumerable<nessie_migrationsOrderByWithRelationInput>
+    orderBy?: Enumerable<RefreshTokensOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: nessie_migrationsWhereUniqueInput
+    cursor?: RefreshTokensWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` nessie_migrations from the position of the cursor.
+     * Take `±n` RefreshTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` nessie_migrations.
+     * Skip the first `n` RefreshTokens.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned nessie_migrations
+     * Count returned RefreshTokens
     **/
-    _count?: true | Nessie_migrationsCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: Nessie_migrationsAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: Nessie_migrationsSumAggregateInputType
+    _count?: true | RefreshTokensCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: Nessie_migrationsMinAggregateInputType
+    _min?: RefreshTokensMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: Nessie_migrationsMaxAggregateInputType
+    _max?: RefreshTokensMaxAggregateInputType
   }
 
-  export type GetNessie_migrationsAggregateType<T extends Nessie_migrationsAggregateArgs> = {
-        [P in keyof T & keyof AggregateNessie_migrations]: P extends '_count' | 'count'
+  export type GetRefreshTokensAggregateType<T extends RefreshTokensAggregateArgs> = {
+        [P in keyof T & keyof AggregateRefreshTokens]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateNessie_migrations[P]>
-      : GetScalarType<T[P], AggregateNessie_migrations[P]>
+        : GetScalarType<T[P], AggregateRefreshTokens[P]>
+      : GetScalarType<T[P], AggregateRefreshTokens[P]>
   }
 
 
 
 
-  export type Nessie_migrationsGroupByArgs = {
-    where?: nessie_migrationsWhereInput
-    orderBy?: Enumerable<nessie_migrationsOrderByWithAggregationInput>
-    by: Nessie_migrationsScalarFieldEnum[]
-    having?: nessie_migrationsScalarWhereWithAggregatesInput
+  export type RefreshTokensGroupByArgs = {
+    where?: RefreshTokensWhereInput
+    orderBy?: Enumerable<RefreshTokensOrderByWithAggregationInput>
+    by: RefreshTokensScalarFieldEnum[]
+    having?: RefreshTokensScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: Nessie_migrationsCountAggregateInputType | true
-    _avg?: Nessie_migrationsAvgAggregateInputType
-    _sum?: Nessie_migrationsSumAggregateInputType
-    _min?: Nessie_migrationsMinAggregateInputType
-    _max?: Nessie_migrationsMaxAggregateInputType
+    _count?: RefreshTokensCountAggregateInputType | true
+    _min?: RefreshTokensMinAggregateInputType
+    _max?: RefreshTokensMaxAggregateInputType
   }
 
 
-  export type Nessie_migrationsGroupByOutputType = {
-    id: bigint
-    file_name: string | null
-    created_at: Date | null
-    _count: Nessie_migrationsCountAggregateOutputType | null
-    _avg: Nessie_migrationsAvgAggregateOutputType | null
-    _sum: Nessie_migrationsSumAggregateOutputType | null
-    _min: Nessie_migrationsMinAggregateOutputType | null
-    _max: Nessie_migrationsMaxAggregateOutputType | null
+  export type RefreshTokensGroupByOutputType = {
+    id: string
+    token: string
+    userId: string
+    _count: RefreshTokensCountAggregateOutputType | null
+    _min: RefreshTokensMinAggregateOutputType | null
+    _max: RefreshTokensMaxAggregateOutputType | null
   }
 
-  type GetNessie_migrationsGroupByPayload<T extends Nessie_migrationsGroupByArgs> = Prisma.PrismaPromise<
+  type GetRefreshTokensGroupByPayload<T extends RefreshTokensGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickArray<Nessie_migrationsGroupByOutputType, T['by']> &
+      PickArray<RefreshTokensGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof Nessie_migrationsGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof RefreshTokensGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], Nessie_migrationsGroupByOutputType[P]>
-            : GetScalarType<T[P], Nessie_migrationsGroupByOutputType[P]>
+              : GetScalarType<T[P], RefreshTokensGroupByOutputType[P]>
+            : GetScalarType<T[P], RefreshTokensGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type nessie_migrationsSelect = {
+  export type RefreshTokensSelect = {
     id?: boolean
-    file_name?: boolean
-    created_at?: boolean
+    token?: boolean
+    userId?: boolean
+    Users?: boolean | UsersArgs
   }
 
 
-  export type nessie_migrationsGetPayload<S extends boolean | null | undefined | nessie_migrationsArgs> =
+  export type RefreshTokensInclude = {
+    Users?: boolean | UsersArgs
+  }
+
+  export type RefreshTokensGetPayload<S extends boolean | null | undefined | RefreshTokensArgs> =
     S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
-    S extends true ? nessie_migrations :
+    S extends true ? RefreshTokens :
     S extends undefined ? never :
-    S extends { include: any } & (nessie_migrationsArgs | nessie_migrationsFindManyArgs)
-    ? nessie_migrations 
-    : S extends { select: any } & (nessie_migrationsArgs | nessie_migrationsFindManyArgs)
+    S extends { include: any } & (RefreshTokensArgs | RefreshTokensFindManyArgs)
+    ? RefreshTokens  & {
+    [P in TruthyKeys<S['include']>]:
+        P extends 'Users' ? UsersGetPayload<S['include'][P]> :  never
+  } 
+    : S extends { select: any } & (RefreshTokensArgs | RefreshTokensFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
-    P extends keyof nessie_migrations ? nessie_migrations[P] : never
+        P extends 'Users' ? UsersGetPayload<S['select'][P]> :  P extends keyof RefreshTokens ? RefreshTokens[P] : never
   } 
-      : nessie_migrations
+      : RefreshTokens
 
 
-  type nessie_migrationsCountArgs = 
-    Omit<nessie_migrationsFindManyArgs, 'select' | 'include'> & {
-      select?: Nessie_migrationsCountAggregateInputType | true
+  type RefreshTokensCountArgs = 
+    Omit<RefreshTokensFindManyArgs, 'select' | 'include'> & {
+      select?: RefreshTokensCountAggregateInputType | true
     }
 
-  export interface nessie_migrationsDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+  export interface RefreshTokensDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
 
     /**
-     * Find zero or one Nessie_migrations that matches the filter.
-     * @param {nessie_migrationsFindUniqueArgs} args - Arguments to find a Nessie_migrations
+     * Find zero or one RefreshTokens that matches the filter.
+     * @param {RefreshTokensFindUniqueArgs} args - Arguments to find a RefreshTokens
      * @example
-     * // Get one Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.findUnique({
+     * // Get one RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUnique<T extends nessie_migrationsFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args: SelectSubset<T, nessie_migrationsFindUniqueArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'nessie_migrations'> extends True ? Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>> : Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T> | null, null>
+    findUnique<T extends RefreshTokensFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, RefreshTokensFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'RefreshTokens'> extends True ? Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>> : Prisma__RefreshTokensClient<RefreshTokensGetPayload<T> | null, null>
 
     /**
-     * Find one Nessie_migrations that matches the filter or throw an error  with `error.code='P2025'` 
+     * Find one RefreshTokens that matches the filter or throw an error  with `error.code='P2025'` 
      *     if no matches were found.
-     * @param {nessie_migrationsFindUniqueOrThrowArgs} args - Arguments to find a Nessie_migrations
+     * @param {RefreshTokensFindUniqueOrThrowArgs} args - Arguments to find a RefreshTokens
      * @example
-     * // Get one Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.findUniqueOrThrow({
+     * // Get one RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findUniqueOrThrow<T extends nessie_migrationsFindUniqueOrThrowArgs>(
-      args?: SelectSubset<T, nessie_migrationsFindUniqueOrThrowArgs>
-    ): Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>>
+    findUniqueOrThrow<T extends RefreshTokensFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, RefreshTokensFindUniqueOrThrowArgs>
+    ): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>>
 
     /**
-     * Find the first Nessie_migrations that matches the filter.
+     * Find the first RefreshTokens that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {nessie_migrationsFindFirstArgs} args - Arguments to find a Nessie_migrations
+     * @param {RefreshTokensFindFirstArgs} args - Arguments to find a RefreshTokens
      * @example
-     * // Get one Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.findFirst({
+     * // Get one RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirst<T extends nessie_migrationsFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
-      args?: SelectSubset<T, nessie_migrationsFindFirstArgs>
-    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'nessie_migrations'> extends True ? Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>> : Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T> | null, null>
+    findFirst<T extends RefreshTokensFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, RefreshTokensFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'RefreshTokens'> extends True ? Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>> : Prisma__RefreshTokensClient<RefreshTokensGetPayload<T> | null, null>
 
     /**
-     * Find the first Nessie_migrations that matches the filter or
+     * Find the first RefreshTokens that matches the filter or
      * throw `NotFoundError` if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {nessie_migrationsFindFirstOrThrowArgs} args - Arguments to find a Nessie_migrations
+     * @param {RefreshTokensFindFirstOrThrowArgs} args - Arguments to find a RefreshTokens
      * @example
-     * // Get one Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.findFirstOrThrow({
+     * // Get one RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
     **/
-    findFirstOrThrow<T extends nessie_migrationsFindFirstOrThrowArgs>(
-      args?: SelectSubset<T, nessie_migrationsFindFirstOrThrowArgs>
-    ): Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>>
+    findFirstOrThrow<T extends RefreshTokensFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, RefreshTokensFindFirstOrThrowArgs>
+    ): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>>
 
     /**
-     * Find zero or more Nessie_migrations that matches the filter.
+     * Find zero or more RefreshTokens that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {nessie_migrationsFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @param {RefreshTokensFindManyArgs=} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.findMany()
+     * // Get all RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.findMany()
      * 
-     * // Get first 10 Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.findMany({ take: 10 })
+     * // Get first 10 RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const nessie_migrationsWithIdOnly = await prisma.nessie_migrations.findMany({ select: { id: true } })
+     * const refreshTokensWithIdOnly = await prisma.refreshTokens.findMany({ select: { id: true } })
      * 
     **/
-    findMany<T extends nessie_migrationsFindManyArgs>(
-      args?: SelectSubset<T, nessie_migrationsFindManyArgs>
-    ): Prisma.PrismaPromise<Array<nessie_migrationsGetPayload<T>>>
+    findMany<T extends RefreshTokensFindManyArgs>(
+      args?: SelectSubset<T, RefreshTokensFindManyArgs>
+    ): Prisma.PrismaPromise<Array<RefreshTokensGetPayload<T>>>
 
     /**
-     * Create a Nessie_migrations.
-     * @param {nessie_migrationsCreateArgs} args - Arguments to create a Nessie_migrations.
+     * Create a RefreshTokens.
+     * @param {RefreshTokensCreateArgs} args - Arguments to create a RefreshTokens.
      * @example
-     * // Create one Nessie_migrations
-     * const Nessie_migrations = await prisma.nessie_migrations.create({
+     * // Create one RefreshTokens
+     * const RefreshTokens = await prisma.refreshTokens.create({
      *   data: {
-     *     // ... data to create a Nessie_migrations
+     *     // ... data to create a RefreshTokens
      *   }
      * })
      * 
     **/
-    create<T extends nessie_migrationsCreateArgs>(
-      args: SelectSubset<T, nessie_migrationsCreateArgs>
-    ): Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>>
+    create<T extends RefreshTokensCreateArgs>(
+      args: SelectSubset<T, RefreshTokensCreateArgs>
+    ): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>>
 
     /**
-     * Create many Nessie_migrations.
-     *     @param {nessie_migrationsCreateManyArgs} args - Arguments to create many Nessie_migrations.
+     * Create many RefreshTokens.
+     *     @param {RefreshTokensCreateManyArgs} args - Arguments to create many RefreshTokens.
      *     @example
-     *     // Create many Nessie_migrations
-     *     const nessie_migrations = await prisma.nessie_migrations.createMany({
+     *     // Create many RefreshTokens
+     *     const refreshTokens = await prisma.refreshTokens.createMany({
      *       data: {
      *         // ... provide data here
      *       }
      *     })
      *     
     **/
-    createMany<T extends nessie_migrationsCreateManyArgs>(
-      args?: SelectSubset<T, nessie_migrationsCreateManyArgs>
+    createMany<T extends RefreshTokensCreateManyArgs>(
+      args?: SelectSubset<T, RefreshTokensCreateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Delete a Nessie_migrations.
-     * @param {nessie_migrationsDeleteArgs} args - Arguments to delete one Nessie_migrations.
+     * Delete a RefreshTokens.
+     * @param {RefreshTokensDeleteArgs} args - Arguments to delete one RefreshTokens.
      * @example
-     * // Delete one Nessie_migrations
-     * const Nessie_migrations = await prisma.nessie_migrations.delete({
+     * // Delete one RefreshTokens
+     * const RefreshTokens = await prisma.refreshTokens.delete({
      *   where: {
-     *     // ... filter to delete one Nessie_migrations
+     *     // ... filter to delete one RefreshTokens
      *   }
      * })
      * 
     **/
-    delete<T extends nessie_migrationsDeleteArgs>(
-      args: SelectSubset<T, nessie_migrationsDeleteArgs>
-    ): Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>>
+    delete<T extends RefreshTokensDeleteArgs>(
+      args: SelectSubset<T, RefreshTokensDeleteArgs>
+    ): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>>
 
     /**
-     * Update one Nessie_migrations.
-     * @param {nessie_migrationsUpdateArgs} args - Arguments to update one Nessie_migrations.
+     * Update one RefreshTokens.
+     * @param {RefreshTokensUpdateArgs} args - Arguments to update one RefreshTokens.
      * @example
-     * // Update one Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.update({
+     * // Update one RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8160,34 +8140,34 @@ export namespace Prisma {
      * })
      * 
     **/
-    update<T extends nessie_migrationsUpdateArgs>(
-      args: SelectSubset<T, nessie_migrationsUpdateArgs>
-    ): Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>>
+    update<T extends RefreshTokensUpdateArgs>(
+      args: SelectSubset<T, RefreshTokensUpdateArgs>
+    ): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>>
 
     /**
-     * Delete zero or more Nessie_migrations.
-     * @param {nessie_migrationsDeleteManyArgs} args - Arguments to filter Nessie_migrations to delete.
+     * Delete zero or more RefreshTokens.
+     * @param {RefreshTokensDeleteManyArgs} args - Arguments to filter RefreshTokens to delete.
      * @example
-     * // Delete a few Nessie_migrations
-     * const { count } = await prisma.nessie_migrations.deleteMany({
+     * // Delete a few RefreshTokens
+     * const { count } = await prisma.refreshTokens.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
     **/
-    deleteMany<T extends nessie_migrationsDeleteManyArgs>(
-      args?: SelectSubset<T, nessie_migrationsDeleteManyArgs>
+    deleteMany<T extends RefreshTokensDeleteManyArgs>(
+      args?: SelectSubset<T, RefreshTokensDeleteManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Nessie_migrations.
+     * Update zero or more RefreshTokens.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {nessie_migrationsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {RefreshTokensUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.updateMany({
+     * // Update many RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8197,59 +8177,59 @@ export namespace Prisma {
      * })
      * 
     **/
-    updateMany<T extends nessie_migrationsUpdateManyArgs>(
-      args: SelectSubset<T, nessie_migrationsUpdateManyArgs>
+    updateMany<T extends RefreshTokensUpdateManyArgs>(
+      args: SelectSubset<T, RefreshTokensUpdateManyArgs>
     ): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create or update one Nessie_migrations.
-     * @param {nessie_migrationsUpsertArgs} args - Arguments to update or create a Nessie_migrations.
+     * Create or update one RefreshTokens.
+     * @param {RefreshTokensUpsertArgs} args - Arguments to update or create a RefreshTokens.
      * @example
-     * // Update or create a Nessie_migrations
-     * const nessie_migrations = await prisma.nessie_migrations.upsert({
+     * // Update or create a RefreshTokens
+     * const refreshTokens = await prisma.refreshTokens.upsert({
      *   create: {
-     *     // ... data to create a Nessie_migrations
+     *     // ... data to create a RefreshTokens
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Nessie_migrations we want to update
+     *     // ... the filter for the RefreshTokens we want to update
      *   }
      * })
     **/
-    upsert<T extends nessie_migrationsUpsertArgs>(
-      args: SelectSubset<T, nessie_migrationsUpsertArgs>
-    ): Prisma__nessie_migrationsClient<nessie_migrationsGetPayload<T>>
+    upsert<T extends RefreshTokensUpsertArgs>(
+      args: SelectSubset<T, RefreshTokensUpsertArgs>
+    ): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T>>
 
     /**
-     * Count the number of Nessie_migrations.
+     * Count the number of RefreshTokens.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {nessie_migrationsCountArgs} args - Arguments to filter Nessie_migrations to count.
+     * @param {RefreshTokensCountArgs} args - Arguments to filter RefreshTokens to count.
      * @example
-     * // Count the number of Nessie_migrations
-     * const count = await prisma.nessie_migrations.count({
+     * // Count the number of RefreshTokens
+     * const count = await prisma.refreshTokens.count({
      *   where: {
-     *     // ... the filter for the Nessie_migrations we want to count
+     *     // ... the filter for the RefreshTokens we want to count
      *   }
      * })
     **/
-    count<T extends nessie_migrationsCountArgs>(
-      args?: Subset<T, nessie_migrationsCountArgs>,
+    count<T extends RefreshTokensCountArgs>(
+      args?: Subset<T, RefreshTokensCountArgs>,
     ): Prisma.PrismaPromise<
       T extends _Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], Nessie_migrationsCountAggregateOutputType>
+          : GetScalarType<T['select'], RefreshTokensCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Nessie_migrations.
+     * Allows you to perform aggregations operations on a RefreshTokens.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Nessie_migrationsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {RefreshTokensAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -8269,13 +8249,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends Nessie_migrationsAggregateArgs>(args: Subset<T, Nessie_migrationsAggregateArgs>): Prisma.PrismaPromise<GetNessie_migrationsAggregateType<T>>
+    aggregate<T extends RefreshTokensAggregateArgs>(args: Subset<T, RefreshTokensAggregateArgs>): Prisma.PrismaPromise<GetRefreshTokensAggregateType<T>>
 
     /**
-     * Group by Nessie_migrations.
+     * Group by RefreshTokens.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {Nessie_migrationsGroupByArgs} args - Group by arguments.
+     * @param {RefreshTokensGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -8290,14 +8270,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends Nessie_migrationsGroupByArgs,
+      T extends RefreshTokensGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: Nessie_migrationsGroupByArgs['orderBy'] }
-        : { orderBy?: Nessie_migrationsGroupByArgs['orderBy'] },
+        ? { orderBy: RefreshTokensGroupByArgs['orderBy'] }
+        : { orderBy?: RefreshTokensGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends TupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -8346,17 +8326,17 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, Nessie_migrationsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNessie_migrationsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, RefreshTokensGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRefreshTokensGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
 
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for nessie_migrations.
+   * The delegate class that acts as a "Promise-like" for RefreshTokens.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export class Prisma__nessie_migrationsClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+  export class Prisma__RefreshTokensClient<T, Null = never> implements Prisma.PrismaPromise<T> {
     private readonly _dmmf;
     private readonly _queryType;
     private readonly _rootField;
@@ -8371,6 +8351,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
+    Users<T extends UsersArgs= {}>(args?: Subset<T, UsersArgs>): Prisma__UsersClient<UsersGetPayload<T> | Null>;
 
     private get _document();
     /**
@@ -8400,23 +8381,27 @@ export namespace Prisma {
   // Custom InputTypes
 
   /**
-   * nessie_migrations base type for findUnique actions
+   * RefreshTokens base type for findUnique actions
    */
-  export type nessie_migrationsFindUniqueArgsBase = {
+  export type RefreshTokensFindUniqueArgsBase = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * Filter, which nessie_migrations to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where: nessie_migrationsWhereUniqueInput
+    include?: RefreshTokensInclude | null
+    /**
+     * Filter, which RefreshTokens to fetch.
+     */
+    where: RefreshTokensWhereUniqueInput
   }
 
   /**
-   * nessie_migrations findUnique
+   * RefreshTokens findUnique
    */
-  export interface nessie_migrationsFindUniqueArgs extends nessie_migrationsFindUniqueArgsBase {
+  export interface RefreshTokensFindUniqueArgs extends RefreshTokensFindUniqueArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
@@ -8426,68 +8411,76 @@ export namespace Prisma {
       
 
   /**
-   * nessie_migrations findUniqueOrThrow
+   * RefreshTokens findUniqueOrThrow
    */
-  export type nessie_migrationsFindUniqueOrThrowArgs = {
+  export type RefreshTokensFindUniqueOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * Filter, which nessie_migrations to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where: nessie_migrationsWhereUniqueInput
+    include?: RefreshTokensInclude | null
+    /**
+     * Filter, which RefreshTokens to fetch.
+     */
+    where: RefreshTokensWhereUniqueInput
   }
 
 
   /**
-   * nessie_migrations base type for findFirst actions
+   * RefreshTokens base type for findFirst actions
    */
-  export type nessie_migrationsFindFirstArgsBase = {
+  export type RefreshTokensFindFirstArgsBase = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * Filter, which nessie_migrations to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where?: nessie_migrationsWhereInput
+    include?: RefreshTokensInclude | null
+    /**
+     * Filter, which RefreshTokens to fetch.
+     */
+    where?: RefreshTokensWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of nessie_migrations to fetch.
+     * Determine the order of RefreshTokens to fetch.
      */
-    orderBy?: Enumerable<nessie_migrationsOrderByWithRelationInput>
+    orderBy?: Enumerable<RefreshTokensOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for nessie_migrations.
+     * Sets the position for searching for RefreshTokens.
      */
-    cursor?: nessie_migrationsWhereUniqueInput
+    cursor?: RefreshTokensWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` nessie_migrations from the position of the cursor.
+     * Take `±n` RefreshTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` nessie_migrations.
+     * Skip the first `n` RefreshTokens.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of nessie_migrations.
+     * Filter by unique combinations of RefreshTokens.
      */
-    distinct?: Enumerable<Nessie_migrationsScalarFieldEnum>
+    distinct?: Enumerable<RefreshTokensScalarFieldEnum>
   }
 
   /**
-   * nessie_migrations findFirst
+   * RefreshTokens findFirst
    */
-  export interface nessie_migrationsFindFirstArgs extends nessie_migrationsFindFirstArgsBase {
+  export interface RefreshTokensFindFirstArgs extends RefreshTokensFindFirstArgsBase {
    /**
     * Throw an Error if query returns no results
     * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
@@ -8497,208 +8490,236 @@ export namespace Prisma {
       
 
   /**
-   * nessie_migrations findFirstOrThrow
+   * RefreshTokens findFirstOrThrow
    */
-  export type nessie_migrationsFindFirstOrThrowArgs = {
+  export type RefreshTokensFindFirstOrThrowArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * Filter, which nessie_migrations to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where?: nessie_migrationsWhereInput
+    include?: RefreshTokensInclude | null
+    /**
+     * Filter, which RefreshTokens to fetch.
+     */
+    where?: RefreshTokensWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of nessie_migrations to fetch.
+     * Determine the order of RefreshTokens to fetch.
      */
-    orderBy?: Enumerable<nessie_migrationsOrderByWithRelationInput>
+    orderBy?: Enumerable<RefreshTokensOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for nessie_migrations.
+     * Sets the position for searching for RefreshTokens.
      */
-    cursor?: nessie_migrationsWhereUniqueInput
+    cursor?: RefreshTokensWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` nessie_migrations from the position of the cursor.
+     * Take `±n` RefreshTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` nessie_migrations.
+     * Skip the first `n` RefreshTokens.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of nessie_migrations.
+     * Filter by unique combinations of RefreshTokens.
      */
-    distinct?: Enumerable<Nessie_migrationsScalarFieldEnum>
+    distinct?: Enumerable<RefreshTokensScalarFieldEnum>
   }
 
 
   /**
-   * nessie_migrations findMany
+   * RefreshTokens findMany
    */
-  export type nessie_migrationsFindManyArgs = {
+  export type RefreshTokensFindManyArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * Filter, which nessie_migrations to fetch.
+     * Choose, which related nodes to fetch as well.
      */
-    where?: nessie_migrationsWhereInput
+    include?: RefreshTokensInclude | null
+    /**
+     * Filter, which RefreshTokens to fetch.
+     */
+    where?: RefreshTokensWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of nessie_migrations to fetch.
+     * Determine the order of RefreshTokens to fetch.
      */
-    orderBy?: Enumerable<nessie_migrationsOrderByWithRelationInput>
+    orderBy?: Enumerable<RefreshTokensOrderByWithRelationInput>
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing nessie_migrations.
+     * Sets the position for listing RefreshTokens.
      */
-    cursor?: nessie_migrationsWhereUniqueInput
+    cursor?: RefreshTokensWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` nessie_migrations from the position of the cursor.
+     * Take `±n` RefreshTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` nessie_migrations.
+     * Skip the first `n` RefreshTokens.
      */
     skip?: number
-    distinct?: Enumerable<Nessie_migrationsScalarFieldEnum>
+    distinct?: Enumerable<RefreshTokensScalarFieldEnum>
   }
 
 
   /**
-   * nessie_migrations create
+   * RefreshTokens create
    */
-  export type nessie_migrationsCreateArgs = {
+  export type RefreshTokensCreateArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * The data needed to create a nessie_migrations.
+     * Choose, which related nodes to fetch as well.
      */
-    data: XOR<nessie_migrationsCreateInput, nessie_migrationsUncheckedCreateInput>
+    include?: RefreshTokensInclude | null
+    /**
+     * The data needed to create a RefreshTokens.
+     */
+    data: XOR<RefreshTokensCreateInput, RefreshTokensUncheckedCreateInput>
   }
 
 
   /**
-   * nessie_migrations createMany
+   * RefreshTokens createMany
    */
-  export type nessie_migrationsCreateManyArgs = {
+  export type RefreshTokensCreateManyArgs = {
     /**
-     * The data used to create many nessie_migrations.
+     * The data used to create many RefreshTokens.
      */
-    data: Enumerable<nessie_migrationsCreateManyInput>
+    data: Enumerable<RefreshTokensCreateManyInput>
     skipDuplicates?: boolean
   }
 
 
   /**
-   * nessie_migrations update
+   * RefreshTokens update
    */
-  export type nessie_migrationsUpdateArgs = {
+  export type RefreshTokensUpdateArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * The data needed to update a nessie_migrations.
+     * Choose, which related nodes to fetch as well.
      */
-    data: XOR<nessie_migrationsUpdateInput, nessie_migrationsUncheckedUpdateInput>
+    include?: RefreshTokensInclude | null
     /**
-     * Choose, which nessie_migrations to update.
+     * The data needed to update a RefreshTokens.
      */
-    where: nessie_migrationsWhereUniqueInput
+    data: XOR<RefreshTokensUpdateInput, RefreshTokensUncheckedUpdateInput>
+    /**
+     * Choose, which RefreshTokens to update.
+     */
+    where: RefreshTokensWhereUniqueInput
   }
 
 
   /**
-   * nessie_migrations updateMany
+   * RefreshTokens updateMany
    */
-  export type nessie_migrationsUpdateManyArgs = {
+  export type RefreshTokensUpdateManyArgs = {
     /**
-     * The data used to update nessie_migrations.
+     * The data used to update RefreshTokens.
      */
-    data: XOR<nessie_migrationsUpdateManyMutationInput, nessie_migrationsUncheckedUpdateManyInput>
+    data: XOR<RefreshTokensUpdateManyMutationInput, RefreshTokensUncheckedUpdateManyInput>
     /**
-     * Filter which nessie_migrations to update
+     * Filter which RefreshTokens to update
      */
-    where?: nessie_migrationsWhereInput
+    where?: RefreshTokensWhereInput
   }
 
 
   /**
-   * nessie_migrations upsert
+   * RefreshTokens upsert
    */
-  export type nessie_migrationsUpsertArgs = {
+  export type RefreshTokensUpsertArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * The filter to search for the nessie_migrations to update in case it exists.
+     * Choose, which related nodes to fetch as well.
      */
-    where: nessie_migrationsWhereUniqueInput
+    include?: RefreshTokensInclude | null
     /**
-     * In case the nessie_migrations found by the `where` argument doesn't exist, create a new nessie_migrations with this data.
+     * The filter to search for the RefreshTokens to update in case it exists.
      */
-    create: XOR<nessie_migrationsCreateInput, nessie_migrationsUncheckedCreateInput>
+    where: RefreshTokensWhereUniqueInput
     /**
-     * In case the nessie_migrations was found with the provided `where` argument, update it with this data.
+     * In case the RefreshTokens found by the `where` argument doesn't exist, create a new RefreshTokens with this data.
      */
-    update: XOR<nessie_migrationsUpdateInput, nessie_migrationsUncheckedUpdateInput>
+    create: XOR<RefreshTokensCreateInput, RefreshTokensUncheckedCreateInput>
+    /**
+     * In case the RefreshTokens was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RefreshTokensUpdateInput, RefreshTokensUncheckedUpdateInput>
   }
 
 
   /**
-   * nessie_migrations delete
+   * RefreshTokens delete
    */
-  export type nessie_migrationsDeleteArgs = {
+  export type RefreshTokensDeleteArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
     /**
-     * Filter which nessie_migrations to delete.
+     * Choose, which related nodes to fetch as well.
      */
-    where: nessie_migrationsWhereUniqueInput
+    include?: RefreshTokensInclude | null
+    /**
+     * Filter which RefreshTokens to delete.
+     */
+    where: RefreshTokensWhereUniqueInput
   }
 
 
   /**
-   * nessie_migrations deleteMany
+   * RefreshTokens deleteMany
    */
-  export type nessie_migrationsDeleteManyArgs = {
+  export type RefreshTokensDeleteManyArgs = {
     /**
-     * Filter which nessie_migrations to delete
+     * Filter which RefreshTokens to delete
      */
-    where?: nessie_migrationsWhereInput
+    where?: RefreshTokensWhereInput
   }
 
 
   /**
-   * nessie_migrations without action
+   * RefreshTokens without action
    */
-  export type nessie_migrationsArgs = {
+  export type RefreshTokensArgs = {
     /**
-     * Select specific fields to fetch from the nessie_migrations
+     * Select specific fields to fetch from the RefreshTokens
      */
-    select?: nessie_migrationsSelect | null
+    select?: RefreshTokensSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: RefreshTokensInclude | null
   }
 
 
@@ -8740,21 +8761,21 @@ export namespace Prisma {
   export type Exercises_WorkoutPlansScalarFieldEnum = (typeof Exercises_WorkoutPlansScalarFieldEnum)[keyof typeof Exercises_WorkoutPlansScalarFieldEnum]
 
 
-  export const Nessie_migrationsScalarFieldEnum: {
-    id: 'id',
-    file_name: 'file_name',
-    created_at: 'created_at'
-  };
-
-  export type Nessie_migrationsScalarFieldEnum = (typeof Nessie_migrationsScalarFieldEnum)[keyof typeof Nessie_migrationsScalarFieldEnum]
-
-
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const RefreshTokensScalarFieldEnum: {
+    id: 'id',
+    token: 'token',
+    userId: 'userId'
+  };
+
+  export type RefreshTokensScalarFieldEnum = (typeof RefreshTokensScalarFieldEnum)[keyof typeof RefreshTokensScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8779,9 +8800,9 @@ export namespace Prisma {
     id: 'id',
     username: 'username',
     email: 'email',
-    password: 'password',
     created_at: 'created_at',
-    profile_pic_uri: 'profile_pic_uri'
+    profile_pic_uri: 'profile_pic_uri',
+    password: 'password'
   };
 
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
@@ -8975,10 +8996,11 @@ export namespace Prisma {
     id?: UuidFilter | string
     username?: StringFilter | string
     email?: StringFilter | string
-    password?: StringFilter | string
     created_at?: DateTimeNullableFilter | Date | string | null
     profile_pic_uri?: StringNullableFilter | string | null
+    password?: StringFilter | string
     ExerciseProgresses?: XOR<ExerciseProgressesRelationFilter, ExerciseProgressesWhereInput> | null
+    RefreshTokens?: XOR<RefreshTokensRelationFilter, RefreshTokensWhereInput> | null
     Users_Exercises?: Users_ExercisesListRelationFilter
     Users_WorkoutPlans?: Users_WorkoutPlansListRelationFilter
   }
@@ -8987,10 +9009,11 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
+    password?: SortOrder
     ExerciseProgresses?: ExerciseProgressesOrderByWithRelationInput
+    RefreshTokens?: RefreshTokensOrderByWithRelationInput
     Users_Exercises?: Users_ExercisesOrderByRelationAggregateInput
     Users_WorkoutPlans?: Users_WorkoutPlansOrderByRelationAggregateInput
   }
@@ -9005,9 +9028,9 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
+    password?: SortOrder
     _count?: UsersCountOrderByAggregateInput
     _max?: UsersMaxOrderByAggregateInput
     _min?: UsersMinOrderByAggregateInput
@@ -9020,9 +9043,9 @@ export namespace Prisma {
     id?: UuidWithAggregatesFilter | string
     username?: StringWithAggregatesFilter | string
     email?: StringWithAggregatesFilter | string
-    password?: StringWithAggregatesFilter | string
     created_at?: DateTimeNullableWithAggregatesFilter | Date | string | null
     profile_pic_uri?: StringNullableWithAggregatesFilter | string | null
+    password?: StringWithAggregatesFilter | string
   }
 
   export type Users_ExercisesWhereInput = {
@@ -9140,44 +9163,44 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter | string | null
   }
 
-  export type nessie_migrationsWhereInput = {
-    AND?: Enumerable<nessie_migrationsWhereInput>
-    OR?: Enumerable<nessie_migrationsWhereInput>
-    NOT?: Enumerable<nessie_migrationsWhereInput>
-    id?: BigIntFilter | bigint | number
-    file_name?: StringNullableFilter | string | null
-    created_at?: DateTimeNullableFilter | Date | string | null
+  export type RefreshTokensWhereInput = {
+    AND?: Enumerable<RefreshTokensWhereInput>
+    OR?: Enumerable<RefreshTokensWhereInput>
+    NOT?: Enumerable<RefreshTokensWhereInput>
+    id?: UuidFilter | string
+    token?: StringFilter | string
+    userId?: UuidFilter | string
+    Users?: XOR<UsersRelationFilter, UsersWhereInput>
   }
 
-  export type nessie_migrationsOrderByWithRelationInput = {
+  export type RefreshTokensOrderByWithRelationInput = {
     id?: SortOrder
-    file_name?: SortOrder
-    created_at?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
+    Users?: UsersOrderByWithRelationInput
   }
 
-  export type nessie_migrationsWhereUniqueInput = {
-    id?: bigint | number
-    file_name?: string
+  export type RefreshTokensWhereUniqueInput = {
+    id?: string
+    userId?: string
   }
 
-  export type nessie_migrationsOrderByWithAggregationInput = {
+  export type RefreshTokensOrderByWithAggregationInput = {
     id?: SortOrder
-    file_name?: SortOrder
-    created_at?: SortOrder
-    _count?: nessie_migrationsCountOrderByAggregateInput
-    _avg?: nessie_migrationsAvgOrderByAggregateInput
-    _max?: nessie_migrationsMaxOrderByAggregateInput
-    _min?: nessie_migrationsMinOrderByAggregateInput
-    _sum?: nessie_migrationsSumOrderByAggregateInput
+    token?: SortOrder
+    userId?: SortOrder
+    _count?: RefreshTokensCountOrderByAggregateInput
+    _max?: RefreshTokensMaxOrderByAggregateInput
+    _min?: RefreshTokensMinOrderByAggregateInput
   }
 
-  export type nessie_migrationsScalarWhereWithAggregatesInput = {
-    AND?: Enumerable<nessie_migrationsScalarWhereWithAggregatesInput>
-    OR?: Enumerable<nessie_migrationsScalarWhereWithAggregatesInput>
-    NOT?: Enumerable<nessie_migrationsScalarWhereWithAggregatesInput>
-    id?: BigIntWithAggregatesFilter | bigint | number
-    file_name?: StringNullableWithAggregatesFilter | string | null
-    created_at?: DateTimeNullableWithAggregatesFilter | Date | string | null
+  export type RefreshTokensScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<RefreshTokensScalarWhereWithAggregatesInput>
+    OR?: Enumerable<RefreshTokensScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<RefreshTokensScalarWhereWithAggregatesInput>
+    id?: UuidWithAggregatesFilter | string
+    token?: StringWithAggregatesFilter | string
+    userId?: UuidWithAggregatesFilter | string
   }
 
   export type ExerciseProgressesCreateInput = {
@@ -9364,10 +9387,11 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
   }
@@ -9376,10 +9400,11 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
   }
@@ -9388,10 +9413,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
   }
@@ -9400,10 +9426,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
   }
@@ -9412,27 +9439,27 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
   }
 
   export type UsersUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type UsersUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type Users_ExercisesCreateInput = {
@@ -9553,46 +9580,45 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type nessie_migrationsCreateInput = {
-    id?: bigint | number
-    file_name?: string | null
-    created_at?: Date | string | null
+  export type RefreshTokensCreateInput = {
+    id: string
+    token: string
+    Users: UsersCreateNestedOneWithoutRefreshTokensInput
   }
 
-  export type nessie_migrationsUncheckedCreateInput = {
-    id?: bigint | number
-    file_name?: string | null
-    created_at?: Date | string | null
+  export type RefreshTokensUncheckedCreateInput = {
+    id: string
+    token: string
+    userId: string
   }
 
-  export type nessie_migrationsUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    file_name?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type RefreshTokensUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    Users?: UsersUpdateOneRequiredWithoutRefreshTokensNestedInput
   }
 
-  export type nessie_migrationsUncheckedUpdateInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    file_name?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type RefreshTokensUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type nessie_migrationsCreateManyInput = {
-    id?: bigint | number
-    file_name?: string | null
-    created_at?: Date | string | null
+  export type RefreshTokensCreateManyInput = {
+    id: string
+    token: string
+    userId: string
   }
 
-  export type nessie_migrationsUpdateManyMutationInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    file_name?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type RefreshTokensUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
   }
 
-  export type nessie_migrationsUncheckedUpdateManyInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    file_name?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type RefreshTokensUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UuidFilter = {
@@ -9947,6 +9973,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter | Date | string | null
   }
 
+  export type RefreshTokensRelationFilter = {
+    is?: RefreshTokensWhereInput | null
+    isNot?: RefreshTokensWhereInput | null
+  }
+
   export type Users_WorkoutPlansListRelationFilter = {
     every?: Users_WorkoutPlansWhereInput
     some?: Users_WorkoutPlansWhereInput
@@ -9961,27 +9992,27 @@ export namespace Prisma {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
+    password?: SortOrder
   }
 
   export type UsersMaxOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
+    password?: SortOrder
   }
 
   export type UsersMinOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
+    password?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter = {
@@ -10056,57 +10087,22 @@ export namespace Prisma {
     description?: SortOrder
   }
 
-  export type BigIntFilter = {
-    equals?: bigint | number
-    in?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    notIn?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    lt?: bigint | number
-    lte?: bigint | number
-    gt?: bigint | number
-    gte?: bigint | number
-    not?: NestedBigIntFilter | bigint | number
-  }
-
-  export type nessie_migrationsCountOrderByAggregateInput = {
+  export type RefreshTokensCountOrderByAggregateInput = {
     id?: SortOrder
-    file_name?: SortOrder
-    created_at?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
   }
 
-  export type nessie_migrationsAvgOrderByAggregateInput = {
+  export type RefreshTokensMaxOrderByAggregateInput = {
     id?: SortOrder
+    token?: SortOrder
+    userId?: SortOrder
   }
 
-  export type nessie_migrationsMaxOrderByAggregateInput = {
+  export type RefreshTokensMinOrderByAggregateInput = {
     id?: SortOrder
-    file_name?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type nessie_migrationsMinOrderByAggregateInput = {
-    id?: SortOrder
-    file_name?: SortOrder
-    created_at?: SortOrder
-  }
-
-  export type nessie_migrationsSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type BigIntWithAggregatesFilter = {
-    equals?: bigint | number
-    in?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    notIn?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    lt?: bigint | number
-    lte?: bigint | number
-    gt?: bigint | number
-    gte?: bigint | number
-    not?: NestedBigIntWithAggregatesFilter | bigint | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedBigIntFilter
-    _min?: NestedBigIntFilter
-    _max?: NestedBigIntFilter
+    token?: SortOrder
+    userId?: SortOrder
   }
 
   export type UsersCreateNestedOneWithoutExerciseProgressesInput = {
@@ -10323,6 +10319,12 @@ export namespace Prisma {
     connect?: ExerciseProgressesWhereUniqueInput
   }
 
+  export type RefreshTokensCreateNestedOneWithoutUsersInput = {
+    create?: XOR<RefreshTokensCreateWithoutUsersInput, RefreshTokensUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: RefreshTokensCreateOrConnectWithoutUsersInput
+    connect?: RefreshTokensWhereUniqueInput
+  }
+
   export type Users_ExercisesCreateNestedManyWithoutUsersInput = {
     create?: XOR<Enumerable<Users_ExercisesCreateWithoutUsersInput>, Enumerable<Users_ExercisesUncheckedCreateWithoutUsersInput>>
     connectOrCreate?: Enumerable<Users_ExercisesCreateOrConnectWithoutUsersInput>
@@ -10341,6 +10343,12 @@ export namespace Prisma {
     create?: XOR<ExerciseProgressesCreateWithoutUsersInput, ExerciseProgressesUncheckedCreateWithoutUsersInput>
     connectOrCreate?: ExerciseProgressesCreateOrConnectWithoutUsersInput
     connect?: ExerciseProgressesWhereUniqueInput
+  }
+
+  export type RefreshTokensUncheckedCreateNestedOneWithoutUsersInput = {
+    create?: XOR<RefreshTokensCreateWithoutUsersInput, RefreshTokensUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: RefreshTokensCreateOrConnectWithoutUsersInput
+    connect?: RefreshTokensWhereUniqueInput
   }
 
   export type Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput = {
@@ -10369,6 +10377,16 @@ export namespace Prisma {
     delete?: boolean
     connect?: ExerciseProgressesWhereUniqueInput
     update?: XOR<ExerciseProgressesUpdateWithoutUsersInput, ExerciseProgressesUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type RefreshTokensUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<RefreshTokensCreateWithoutUsersInput, RefreshTokensUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: RefreshTokensCreateOrConnectWithoutUsersInput
+    upsert?: RefreshTokensUpsertWithoutUsersInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: RefreshTokensWhereUniqueInput
+    update?: XOR<RefreshTokensUpdateWithoutUsersInput, RefreshTokensUncheckedUpdateWithoutUsersInput>
   }
 
   export type Users_ExercisesUpdateManyWithoutUsersNestedInput = {
@@ -10407,6 +10425,16 @@ export namespace Prisma {
     delete?: boolean
     connect?: ExerciseProgressesWhereUniqueInput
     update?: XOR<ExerciseProgressesUpdateWithoutUsersInput, ExerciseProgressesUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<RefreshTokensCreateWithoutUsersInput, RefreshTokensUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: RefreshTokensCreateOrConnectWithoutUsersInput
+    upsert?: RefreshTokensUpsertWithoutUsersInput
+    disconnect?: boolean
+    delete?: boolean
+    connect?: RefreshTokensWhereUniqueInput
+    update?: XOR<RefreshTokensUpdateWithoutUsersInput, RefreshTokensUncheckedUpdateWithoutUsersInput>
   }
 
   export type Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput = {
@@ -10577,12 +10605,18 @@ export namespace Prisma {
     deleteMany?: Enumerable<Users_WorkoutPlansScalarWhereInput>
   }
 
-  export type BigIntFieldUpdateOperationsInput = {
-    set?: bigint | number
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
+  export type UsersCreateNestedOneWithoutRefreshTokensInput = {
+    create?: XOR<UsersCreateWithoutRefreshTokensInput, UsersUncheckedCreateWithoutRefreshTokensInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutRefreshTokensInput
+    connect?: UsersWhereUniqueInput
+  }
+
+  export type UsersUpdateOneRequiredWithoutRefreshTokensNestedInput = {
+    create?: XOR<UsersCreateWithoutRefreshTokensInput, UsersUncheckedCreateWithoutRefreshTokensInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutRefreshTokensInput
+    upsert?: UsersUpsertWithoutRefreshTokensInput
+    connect?: UsersWhereUniqueInput
+    update?: XOR<UsersUpdateWithoutRefreshTokensInput, UsersUncheckedUpdateWithoutRefreshTokensInput>
   }
 
   export type NestedUuidFilter = {
@@ -10821,51 +10855,14 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter
   }
 
-  export type NestedBigIntFilter = {
-    equals?: bigint | number
-    in?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    notIn?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    lt?: bigint | number
-    lte?: bigint | number
-    gt?: bigint | number
-    gte?: bigint | number
-    not?: NestedBigIntFilter | bigint | number
-  }
-
-  export type NestedBigIntWithAggregatesFilter = {
-    equals?: bigint | number
-    in?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    notIn?: Enumerable<bigint> | Enumerable<number> | bigint | number
-    lt?: bigint | number
-    lte?: bigint | number
-    gt?: bigint | number
-    gte?: bigint | number
-    not?: NestedBigIntWithAggregatesFilter | bigint | number
-    _count?: NestedIntFilter
-    _avg?: NestedFloatFilter
-    _sum?: NestedBigIntFilter
-    _min?: NestedBigIntFilter
-    _max?: NestedBigIntFilter
-  }
-
-  export type NestedFloatFilter = {
-    equals?: number
-    in?: Enumerable<number> | number
-    notIn?: Enumerable<number> | number
-    lt?: number
-    lte?: number
-    gt?: number
-    gte?: number
-    not?: NestedFloatFilter | number
-  }
-
   export type UsersCreateWithoutExerciseProgressesInput = {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
+    RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
   }
@@ -10874,9 +10871,10 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
+    RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
   }
@@ -10920,9 +10918,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
   }
@@ -10931,9 +10930,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
   }
@@ -11213,6 +11213,21 @@ export namespace Prisma {
     create: XOR<ExerciseProgressesCreateWithoutUsersInput, ExerciseProgressesUncheckedCreateWithoutUsersInput>
   }
 
+  export type RefreshTokensCreateWithoutUsersInput = {
+    id: string
+    token: string
+  }
+
+  export type RefreshTokensUncheckedCreateWithoutUsersInput = {
+    id: string
+    token: string
+  }
+
+  export type RefreshTokensCreateOrConnectWithoutUsersInput = {
+    where: RefreshTokensWhereUniqueInput
+    create: XOR<RefreshTokensCreateWithoutUsersInput, RefreshTokensUncheckedCreateWithoutUsersInput>
+  }
+
   export type Users_ExercisesCreateWithoutUsersInput = {
     Exercises: ExercisesCreateNestedOneWithoutUsers_ExercisesInput
   }
@@ -11273,6 +11288,21 @@ export namespace Prisma {
     newWeight?: NullableIntFieldUpdateOperationsInput | number | null
     prevDur?: NullableFloatFieldUpdateOperationsInput | number | null
     newDur?: NullableFloatFieldUpdateOperationsInput | number | null
+  }
+
+  export type RefreshTokensUpsertWithoutUsersInput = {
+    update: XOR<RefreshTokensUpdateWithoutUsersInput, RefreshTokensUncheckedUpdateWithoutUsersInput>
+    create: XOR<RefreshTokensCreateWithoutUsersInput, RefreshTokensUncheckedCreateWithoutUsersInput>
+  }
+
+  export type RefreshTokensUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type RefreshTokensUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
   }
 
   export type Users_ExercisesUpsertWithWhereUniqueWithoutUsersInput = {
@@ -11344,10 +11374,11 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
   }
 
@@ -11355,10 +11386,11 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
   }
 
@@ -11401,10 +11433,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
   }
 
@@ -11412,10 +11445,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
   }
 
@@ -11423,10 +11457,11 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
   }
 
@@ -11434,10 +11469,11 @@ export namespace Prisma {
     id: string
     username: string
     email: string
-    password: string
     created_at?: Date | string | null
     profile_pic_uri?: string | null
+    password: string
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
   }
 
@@ -11474,10 +11510,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
   }
 
@@ -11485,10 +11522,11 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
   }
 
@@ -11577,6 +11615,64 @@ export namespace Prisma {
   export type Users_WorkoutPlansUpdateManyWithWhereWithoutWorkoutPlansInput = {
     where: Users_WorkoutPlansScalarWhereInput
     data: XOR<Users_WorkoutPlansUpdateManyMutationInput, Users_WorkoutPlansUncheckedUpdateManyWithoutUsers_WorkoutPlansInput>
+  }
+
+  export type UsersCreateWithoutRefreshTokensInput = {
+    id: string
+    username: string
+    email: string
+    created_at?: Date | string | null
+    profile_pic_uri?: string | null
+    password: string
+    ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
+    Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
+    Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
+  }
+
+  export type UsersUncheckedCreateWithoutRefreshTokensInput = {
+    id: string
+    username: string
+    email: string
+    created_at?: Date | string | null
+    profile_pic_uri?: string | null
+    password: string
+    ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
+    Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
+    Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
+  }
+
+  export type UsersCreateOrConnectWithoutRefreshTokensInput = {
+    where: UsersWhereUniqueInput
+    create: XOR<UsersCreateWithoutRefreshTokensInput, UsersUncheckedCreateWithoutRefreshTokensInput>
+  }
+
+  export type UsersUpsertWithoutRefreshTokensInput = {
+    update: XOR<UsersUpdateWithoutRefreshTokensInput, UsersUncheckedUpdateWithoutRefreshTokensInput>
+    create: XOR<UsersCreateWithoutRefreshTokensInput, UsersUncheckedCreateWithoutRefreshTokensInput>
+  }
+
+  export type UsersUpdateWithoutRefreshTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
+    Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
+    Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
+  }
+
+  export type UsersUncheckedUpdateWithoutRefreshTokensInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
+    Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
+    Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type Exercises_WorkoutPlansCreateManyExercisesInput = {

@@ -1,3 +1,9 @@
 node_modules
 # Keep environment variables out of version control
 .env
+
+# instance assets do not need to be in the repo
+assets
+.env.test
+.env.development
+.gitignore

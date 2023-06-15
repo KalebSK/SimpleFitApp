@@ -5,8 +5,10 @@ export const validate = ( schema: z.AnyZodObject ) =>
     async (ctx: RouterContext<string>, next: () => any): Promise<void> => {
         try{
             schema.parse({
-                params: ctx.params,
-                query: helpers.getQuery
+                params: helpers.getQuery(ctx),
+                body: await ctx.request.body().value,
+                headers: ctx.request.headers.get('Authorization'),
+                cookies: await ctx.cookies.get('refreshtoken')
             })
             await next();
         } catch(error) {

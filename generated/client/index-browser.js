@@ -110,15 +110,15 @@ exports.Prisma.Exercises_WorkoutPlansScalarFieldEnum = {
   WorkoutPlans_id: 'WorkoutPlans_id'
 };
 
-exports.Prisma.Nessie_migrationsScalarFieldEnum = {
-  id: 'id',
-  file_name: 'file_name',
-  created_at: 'created_at'
-};
-
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.RefreshTokensScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
@@ -137,9 +137,9 @@ exports.Prisma.UsersScalarFieldEnum = {
   id: 'id',
   username: 'username',
   email: 'email',
-  password: 'password',
   created_at: 'created_at',
-  profile_pic_uri: 'profile_pic_uri'
+  profile_pic_uri: 'profile_pic_uri',
+  password: 'password'
 };
 
 exports.Prisma.Users_ExercisesScalarFieldEnum = {
@@ -179,7 +179,7 @@ exports.Prisma.ModelName = {
   Users_Exercises: 'Users_Exercises',
   Users_WorkoutPlans: 'Users_WorkoutPlans',
   WorkoutPlans: 'WorkoutPlans',
-  nessie_migrations: 'nessie_migrations'
+  RefreshTokens: 'RefreshTokens'
 };
 
 /**
