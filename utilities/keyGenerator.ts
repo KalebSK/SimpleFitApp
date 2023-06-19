@@ -6,3 +6,4 @@ const keyBuf: Uint8Array = encoder.encode(secret);
 export const key : CryptoKey = await crypto.subtle.importKey("raw", keyBuf, {name: "HMAC",
              hash: "SHA-512"},
              true, ["sign", "verify"],);
+export const rKey: CryptoKey = await crypto.subtle.importKey("raw", keyBuf, {name: "HMAC", hash: "SHA-512"}, true, ["sign", "verify"]);

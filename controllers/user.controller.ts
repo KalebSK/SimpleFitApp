@@ -1,4 +1,4 @@
-import { key } from "../utilities/util.ts";
+import { key, rKey } from "../utilities/keyGenerator.ts";
 import { create, bcrypt, RouterContext } from "../utilities/deps.ts"
 import { SignUpInput, SignInInput } from "../utilities/schema.ts";
 import { prisma } from "../index.ts";
@@ -6,16 +6,19 @@ import { Prisma } from "../generated/client/deno/edge.js";
 import { ProcessFormData } from "../formDataProcessor.ts";
 import { verify } from "../utilities/deps.ts";
 import { getNumericDate ,ensureDir, move, Payload } from "../utilities/deps.ts";
+import { FormDataBody, Request, Response } from "https://deno.land/x/oak@v12.5.0/mod.ts";
+import { Users } from "../generated/client/index.d.ts";
+import { Token, Id } from "../utilities/types.ts";
 export const signUp = async ({request, response}: RouterContext<string>) : Promise<void> => {
     try {
         // request data
         const data: SignUpInput = await request.body({type: 'json'}).value;
         // generate new uuid
         const userId: string = crypto.randomUUID();
-        const salt = await bcrypt.genSalt();
+        const salt: string = await bcrypt.genSalt();
         const pHash: string = await bcrypt.hash(data.password, salt);
         // query db
-        const _user = await prisma.users.create({
+        const _user: Users = await prisma.users.create({
             data: {id: userId, email: data.email, username: data.username, password: pHash}
         })
         response.status = 201;
@@ -43,11 +46,11 @@ export const signUp = async ({request, response}: RouterContext<string>) : Promi
 
 export const signIn = async (ctx: RouterContext<string>) : Promise<void> => {
     try {
-        const request = ctx.request;
-        const response = ctx.response;
+        const request: Request = ctx.request;
+        const response: Response = ctx.response;
 
         const data: SignInInput = await request.body().value;
-        const user = await prisma.users.findFirst({where:{email: data.email}});
+        const user: Users | null = await prisma.users.findFirst({where:{email: data.email}});
         if(!user) {
             response.status = 404;
             response.body = {
@@ -68,7 +71,7 @@ export const signIn = async (ctx: RouterContext<string>) : Promise<void> => {
             exp: getNumericDate(60*60*365)
         }
         // generate refresh token
-        const refreshToken: string = await create({alg: "HS512", typ: "JWT"},refPayload, key);
+        const refreshToken: string = await create({alg: "HS512", typ: "JWT"},refPayload, rKey);
         if(accessToken && refreshToken) {
             await ctx.cookies.set("refreshToken", refreshToken);
             const id: string = crypto.randomUUID();
@@ -107,7 +110,7 @@ export const signIn = async (ctx: RouterContext<string>) : Promise<void> => {
 
 export const refreshAuth = async(ctx: RouterContext<string>) : Promise<void> => {
     try {
-        const refreshToken = await ctx.cookies.get('refreshToken');
+        const refreshToken: Token = await ctx.cookies.get('refreshToken');
         if(!refreshToken){
             ctx.response.status = 406;
             ctx.response.body = {
@@ -115,7 +118,7 @@ export const refreshAuth = async(ctx: RouterContext<string>) : Promise<void> => 
             }   
             return; 
         }
-        const _refreshPayload: Payload = await verify(refreshToken, key);
+        const _refreshPayload: Payload = await verify(refreshToken, rKey);
         
         const data = await ctx.request.body().value;
         const payload = {
@@ -132,7 +135,7 @@ export const refreshAuth = async(ctx: RouterContext<string>) : Promise<void> => 
             return;
         }
         // sign a new Access Token
-        const accessToken: string = await create({ alg: "HS512", typ: "JWT" }, payload, key);
+        const accessToken: Token = await create({ alg: "HS512", typ: "JWT" }, payload, key);
         if(!accessToken) {
             ctx.response.status = 500;
             ctx.response.body = {
@@ -154,10 +157,10 @@ export const refreshAuth = async(ctx: RouterContext<string>) : Promise<void> => 
 }
 
 export const updateProfilePic = async (ctx: RouterContext<string>) : Promise<void> => {
-    const request = ctx.request;
-    const response = ctx.response;
+    const request: Request = ctx.request;
+    const response: Response = ctx.response;
     try{
-        const userId = request.url.searchParams.get('id');
+        const userId: Id = request.url.searchParams.get('id');
         if(userId === null) {
             response.status = 400;
             response.body = {
@@ -166,7 +169,7 @@ export const updateProfilePic = async (ctx: RouterContext<string>) : Promise<voi
             return;
         }
 
-        const data = await request.body({type: 'form-data'}).value.read();
+        const data: FormDataBody = await request.body({type: 'form-data'}).value.read();
         const files = data.files;
 
         if(!files) {
