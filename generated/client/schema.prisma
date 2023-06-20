@@ -25,6 +25,8 @@ model ExerciseProgresses {
 
 model Exercises {
   id                     String                   @id @db.Uuid
+  createdBy              String                   @db.Uuid
+  creator                Users                    @relation(fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
   name                   String                   @default("an exercise") @db.VarChar(255)
   description            String?                  @default("this is an exercise")
   muscle_group           MuscleGroup?
@@ -50,6 +52,7 @@ model Users {
   created_at         DateTime?            @default(now()) @db.Timestamp(6)
   profile_pic_uri    String?
   password           String               @db.VarChar
+  createdExercises   Exercises[]
   ExerciseProgresses ExerciseProgresses?
   RefreshTokens      RefreshTokens?
   Users_Exercises    Users_Exercises[]
@@ -91,7 +94,7 @@ model RefreshTokens {
 
 enum ExerciseType {
   Cardio
-  Muscle
+  Strength
 }
 
 enum MuscleGroup {

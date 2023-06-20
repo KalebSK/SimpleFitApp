@@ -33,6 +33,7 @@ export type ExerciseProgresses = {
  */
 export type Exercises = {
   id: string
+  createdBy: string
   name: string
   description: string | null
   muscle_group: MuscleGroup | null
@@ -106,7 +107,7 @@ export type RefreshTokens = {
 
 export const ExerciseType: {
   Cardio: 'Cardio',
-  Muscle: 'Muscle'
+  Strength: 'Strength'
 };
 
 export type ExerciseType = (typeof ExerciseType)[keyof typeof ExerciseType]
@@ -1008,11 +1009,13 @@ export namespace Prisma {
 
 
   export type UsersCountOutputType = {
+    createdExercises: number
     Users_Exercises: number
     Users_WorkoutPlans: number
   }
 
   export type UsersCountOutputTypeSelect = {
+    createdExercises?: boolean
     Users_Exercises?: boolean
     Users_WorkoutPlans?: boolean
   }
@@ -2124,6 +2127,7 @@ export namespace Prisma {
 
   export type ExercisesMinAggregateOutputType = {
     id: string | null
+    createdBy: string | null
     name: string | null
     description: string | null
     muscle_group: MuscleGroup | null
@@ -2132,6 +2136,7 @@ export namespace Prisma {
 
   export type ExercisesMaxAggregateOutputType = {
     id: string | null
+    createdBy: string | null
     name: string | null
     description: string | null
     muscle_group: MuscleGroup | null
@@ -2140,6 +2145,7 @@ export namespace Prisma {
 
   export type ExercisesCountAggregateOutputType = {
     id: number
+    createdBy: number
     name: number
     description: number
     muscle_group: number
@@ -2150,6 +2156,7 @@ export namespace Prisma {
 
   export type ExercisesMinAggregateInputType = {
     id?: true
+    createdBy?: true
     name?: true
     description?: true
     muscle_group?: true
@@ -2158,6 +2165,7 @@ export namespace Prisma {
 
   export type ExercisesMaxAggregateInputType = {
     id?: true
+    createdBy?: true
     name?: true
     description?: true
     muscle_group?: true
@@ -2166,6 +2174,7 @@ export namespace Prisma {
 
   export type ExercisesCountAggregateInputType = {
     id?: true
+    createdBy?: true
     name?: true
     description?: true
     muscle_group?: true
@@ -2248,6 +2257,7 @@ export namespace Prisma {
 
   export type ExercisesGroupByOutputType = {
     id: string
+    createdBy: string
     name: string
     description: string | null
     muscle_group: MuscleGroup | null
@@ -2273,10 +2283,12 @@ export namespace Prisma {
 
   export type ExercisesSelect = {
     id?: boolean
+    createdBy?: boolean
     name?: boolean
     description?: boolean
     muscle_group?: boolean
     exercise_type?: boolean
+    creator?: boolean | UsersArgs
     ExerciseProgresses?: boolean | ExerciseProgressesArgs
     Exercises_WorkoutPlans?: boolean | Exercises$Exercises_WorkoutPlansArgs
     Users_Exercises?: boolean | Exercises$Users_ExercisesArgs
@@ -2285,6 +2297,7 @@ export namespace Prisma {
 
 
   export type ExercisesInclude = {
+    creator?: boolean | UsersArgs
     ExerciseProgresses?: boolean | ExerciseProgressesArgs
     Exercises_WorkoutPlans?: boolean | Exercises$Exercises_WorkoutPlansArgs
     Users_Exercises?: boolean | Exercises$Users_ExercisesArgs
@@ -2298,6 +2311,7 @@ export namespace Prisma {
     S extends { include: any } & (ExercisesArgs | ExercisesFindManyArgs)
     ? Exercises  & {
     [P in TruthyKeys<S['include']>]:
+        P extends 'creator' ? UsersGetPayload<S['include'][P]> :
         P extends 'ExerciseProgresses' ? ExerciseProgressesGetPayload<S['include'][P]> | null :
         P extends 'Exercises_WorkoutPlans' ? Array < Exercises_WorkoutPlansGetPayload<S['include'][P]>>  :
         P extends 'Users_Exercises' ? Array < Users_ExercisesGetPayload<S['include'][P]>>  :
@@ -2306,6 +2320,7 @@ export namespace Prisma {
     : S extends { select: any } & (ExercisesArgs | ExercisesFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
+        P extends 'creator' ? UsersGetPayload<S['select'][P]> :
         P extends 'ExerciseProgresses' ? ExerciseProgressesGetPayload<S['select'][P]> | null :
         P extends 'Exercises_WorkoutPlans' ? Array < Exercises_WorkoutPlansGetPayload<S['select'][P]>>  :
         P extends 'Users_Exercises' ? Array < Users_ExercisesGetPayload<S['select'][P]>>  :
@@ -2680,6 +2695,8 @@ export namespace Prisma {
     private _requestPromise?;
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+    creator<T extends UsersArgs= {}>(args?: Subset<T, UsersArgs>): Prisma__UsersClient<UsersGetPayload<T> | Null>;
 
     ExerciseProgresses<T extends ExerciseProgressesArgs= {}>(args?: Subset<T, ExerciseProgressesArgs>): Prisma__ExerciseProgressesClient<ExerciseProgressesGetPayload<T> | Null>;
 
@@ -4187,6 +4204,7 @@ export namespace Prisma {
     created_at?: boolean
     profile_pic_uri?: boolean
     password?: boolean
+    createdExercises?: boolean | Users$createdExercisesArgs
     ExerciseProgresses?: boolean | ExerciseProgressesArgs
     RefreshTokens?: boolean | RefreshTokensArgs
     Users_Exercises?: boolean | Users$Users_ExercisesArgs
@@ -4196,6 +4214,7 @@ export namespace Prisma {
 
 
   export type UsersInclude = {
+    createdExercises?: boolean | Users$createdExercisesArgs
     ExerciseProgresses?: boolean | ExerciseProgressesArgs
     RefreshTokens?: boolean | RefreshTokensArgs
     Users_Exercises?: boolean | Users$Users_ExercisesArgs
@@ -4210,6 +4229,7 @@ export namespace Prisma {
     S extends { include: any } & (UsersArgs | UsersFindManyArgs)
     ? Users  & {
     [P in TruthyKeys<S['include']>]:
+        P extends 'createdExercises' ? Array < ExercisesGetPayload<S['include'][P]>>  :
         P extends 'ExerciseProgresses' ? ExerciseProgressesGetPayload<S['include'][P]> | null :
         P extends 'RefreshTokens' ? RefreshTokensGetPayload<S['include'][P]> | null :
         P extends 'Users_Exercises' ? Array < Users_ExercisesGetPayload<S['include'][P]>>  :
@@ -4219,6 +4239,7 @@ export namespace Prisma {
     : S extends { select: any } & (UsersArgs | UsersFindManyArgs)
       ? {
     [P in TruthyKeys<S['select']>]:
+        P extends 'createdExercises' ? Array < ExercisesGetPayload<S['select'][P]>>  :
         P extends 'ExerciseProgresses' ? ExerciseProgressesGetPayload<S['select'][P]> | null :
         P extends 'RefreshTokens' ? RefreshTokensGetPayload<S['select'][P]> | null :
         P extends 'Users_Exercises' ? Array < Users_ExercisesGetPayload<S['select'][P]>>  :
@@ -4595,6 +4616,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
     constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
 
+    createdExercises<T extends Users$createdExercisesArgs= {}>(args?: Subset<T, Users$createdExercisesArgs>): Prisma.PrismaPromise<Array<ExercisesGetPayload<T>>| Null>;
+
     ExerciseProgresses<T extends ExerciseProgressesArgs= {}>(args?: Subset<T, ExerciseProgressesArgs>): Prisma__ExerciseProgressesClient<ExerciseProgressesGetPayload<T> | Null>;
 
     RefreshTokens<T extends RefreshTokensArgs= {}>(args?: Subset<T, RefreshTokensArgs>): Prisma__RefreshTokensClient<RefreshTokensGetPayload<T> | Null>;
@@ -4955,6 +4978,27 @@ export namespace Prisma {
      * Filter which Users to delete
      */
     where?: UsersWhereInput
+  }
+
+
+  /**
+   * Users.createdExercises
+   */
+  export type Users$createdExercisesArgs = {
+    /**
+     * Select specific fields to fetch from the Exercises
+     */
+    select?: ExercisesSelect | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: ExercisesInclude | null
+    where?: ExercisesWhereInput
+    orderBy?: Enumerable<ExercisesOrderByWithRelationInput>
+    cursor?: ExercisesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Enumerable<ExercisesScalarFieldEnum>
   }
 
 
@@ -8744,6 +8788,7 @@ export namespace Prisma {
 
   export const ExercisesScalarFieldEnum: {
     id: 'id',
+    createdBy: 'createdBy',
     name: 'name',
     description: 'description',
     muscle_group: 'muscle_group',
@@ -8906,10 +8951,12 @@ export namespace Prisma {
     OR?: Enumerable<ExercisesWhereInput>
     NOT?: Enumerable<ExercisesWhereInput>
     id?: UuidFilter | string
+    createdBy?: UuidFilter | string
     name?: StringFilter | string
     description?: StringNullableFilter | string | null
     muscle_group?: EnumMuscleGroupNullableFilter | MuscleGroup | null
     exercise_type?: EnumExerciseTypeFilter | ExerciseType
+    creator?: XOR<UsersRelationFilter, UsersWhereInput>
     ExerciseProgresses?: XOR<ExerciseProgressesRelationFilter, ExerciseProgressesWhereInput> | null
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansListRelationFilter
     Users_Exercises?: Users_ExercisesListRelationFilter
@@ -8917,10 +8964,12 @@ export namespace Prisma {
 
   export type ExercisesOrderByWithRelationInput = {
     id?: SortOrder
+    createdBy?: SortOrder
     name?: SortOrder
     description?: SortOrder
     muscle_group?: SortOrder
     exercise_type?: SortOrder
+    creator?: UsersOrderByWithRelationInput
     ExerciseProgresses?: ExerciseProgressesOrderByWithRelationInput
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansOrderByRelationAggregateInput
     Users_Exercises?: Users_ExercisesOrderByRelationAggregateInput
@@ -8932,6 +8981,7 @@ export namespace Prisma {
 
   export type ExercisesOrderByWithAggregationInput = {
     id?: SortOrder
+    createdBy?: SortOrder
     name?: SortOrder
     description?: SortOrder
     muscle_group?: SortOrder
@@ -8946,6 +8996,7 @@ export namespace Prisma {
     OR?: Enumerable<ExercisesScalarWhereWithAggregatesInput>
     NOT?: Enumerable<ExercisesScalarWhereWithAggregatesInput>
     id?: UuidWithAggregatesFilter | string
+    createdBy?: UuidWithAggregatesFilter | string
     name?: StringWithAggregatesFilter | string
     description?: StringNullableWithAggregatesFilter | string | null
     muscle_group?: EnumMuscleGroupNullableWithAggregatesFilter | MuscleGroup | null
@@ -8999,6 +9050,7 @@ export namespace Prisma {
     created_at?: DateTimeNullableFilter | Date | string | null
     profile_pic_uri?: StringNullableFilter | string | null
     password?: StringFilter | string
+    createdExercises?: ExercisesListRelationFilter
     ExerciseProgresses?: XOR<ExerciseProgressesRelationFilter, ExerciseProgressesWhereInput> | null
     RefreshTokens?: XOR<RefreshTokensRelationFilter, RefreshTokensWhereInput> | null
     Users_Exercises?: Users_ExercisesListRelationFilter
@@ -9012,6 +9064,7 @@ export namespace Prisma {
     created_at?: SortOrder
     profile_pic_uri?: SortOrder
     password?: SortOrder
+    createdExercises?: ExercisesOrderByRelationAggregateInput
     ExerciseProgresses?: ExerciseProgressesOrderByWithRelationInput
     RefreshTokens?: RefreshTokensOrderByWithRelationInput
     Users_Exercises?: Users_ExercisesOrderByRelationAggregateInput
@@ -9287,6 +9340,7 @@ export namespace Prisma {
     description?: string | null
     muscle_group?: MuscleGroup | null
     exercise_type?: ExerciseType
+    creator: UsersCreateNestedOneWithoutCreatedExercisesInput
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutExercisesInput
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansCreateNestedManyWithoutExercisesInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutExercisesInput
@@ -9294,6 +9348,7 @@ export namespace Prisma {
 
   export type ExercisesUncheckedCreateInput = {
     id: string
+    createdBy: string
     name?: string
     description?: string | null
     muscle_group?: MuscleGroup | null
@@ -9309,6 +9364,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
     exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
+    creator?: UsersUpdateOneRequiredWithoutCreatedExercisesNestedInput
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutExercisesNestedInput
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansUpdateManyWithoutExercisesNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutExercisesNestedInput
@@ -9316,6 +9372,7 @@ export namespace Prisma {
 
   export type ExercisesUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
@@ -9327,6 +9384,7 @@ export namespace Prisma {
 
   export type ExercisesCreateManyInput = {
     id: string
+    createdBy: string
     name?: string
     description?: string | null
     muscle_group?: MuscleGroup | null
@@ -9343,6 +9401,7 @@ export namespace Prisma {
 
   export type ExercisesUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
@@ -9390,6 +9449,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
     RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
@@ -9403,6 +9463,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesUncheckedCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
     RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
@@ -9416,6 +9477,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
     RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
@@ -9429,6 +9491,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUncheckedUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
     RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
@@ -9859,6 +9922,7 @@ export namespace Prisma {
 
   export type ExercisesCountOrderByAggregateInput = {
     id?: SortOrder
+    createdBy?: SortOrder
     name?: SortOrder
     description?: SortOrder
     muscle_group?: SortOrder
@@ -9867,6 +9931,7 @@ export namespace Prisma {
 
   export type ExercisesMaxOrderByAggregateInput = {
     id?: SortOrder
+    createdBy?: SortOrder
     name?: SortOrder
     description?: SortOrder
     muscle_group?: SortOrder
@@ -9875,6 +9940,7 @@ export namespace Prisma {
 
   export type ExercisesMinOrderByAggregateInput = {
     id?: SortOrder
+    createdBy?: SortOrder
     name?: SortOrder
     description?: SortOrder
     muscle_group?: SortOrder
@@ -9973,6 +10039,12 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter | Date | string | null
   }
 
+  export type ExercisesListRelationFilter = {
+    every?: ExercisesWhereInput
+    some?: ExercisesWhereInput
+    none?: ExercisesWhereInput
+  }
+
   export type RefreshTokensRelationFilter = {
     is?: RefreshTokensWhereInput | null
     isNot?: RefreshTokensWhereInput | null
@@ -9982,6 +10054,10 @@ export namespace Prisma {
     every?: Users_WorkoutPlansWhereInput
     some?: Users_WorkoutPlansWhereInput
     none?: Users_WorkoutPlansWhereInput
+  }
+
+  export type ExercisesOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type Users_WorkoutPlansOrderByRelationAggregateInput = {
@@ -10157,6 +10233,12 @@ export namespace Prisma {
     set?: string
   }
 
+  export type UsersCreateNestedOneWithoutCreatedExercisesInput = {
+    create?: XOR<UsersCreateWithoutCreatedExercisesInput, UsersUncheckedCreateWithoutCreatedExercisesInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutCreatedExercisesInput
+    connect?: UsersWhereUniqueInput
+  }
+
   export type ExerciseProgressesCreateNestedOneWithoutExercisesInput = {
     create?: XOR<ExerciseProgressesCreateWithoutExercisesInput, ExerciseProgressesUncheckedCreateWithoutExercisesInput>
     connectOrCreate?: ExerciseProgressesCreateOrConnectWithoutExercisesInput
@@ -10207,6 +10289,14 @@ export namespace Prisma {
 
   export type EnumExerciseTypeFieldUpdateOperationsInput = {
     set?: ExerciseType
+  }
+
+  export type UsersUpdateOneRequiredWithoutCreatedExercisesNestedInput = {
+    create?: XOR<UsersCreateWithoutCreatedExercisesInput, UsersUncheckedCreateWithoutCreatedExercisesInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutCreatedExercisesInput
+    upsert?: UsersUpsertWithoutCreatedExercisesInput
+    connect?: UsersWhereUniqueInput
+    update?: XOR<UsersUpdateWithoutCreatedExercisesInput, UsersUncheckedUpdateWithoutCreatedExercisesInput>
   }
 
   export type ExerciseProgressesUpdateOneWithoutExercisesNestedInput = {
@@ -10313,6 +10403,13 @@ export namespace Prisma {
     update?: XOR<WorkoutPlansUpdateWithoutExercises_WorkoutPlansInput, WorkoutPlansUncheckedUpdateWithoutExercises_WorkoutPlansInput>
   }
 
+  export type ExercisesCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<Enumerable<ExercisesCreateWithoutCreatorInput>, Enumerable<ExercisesUncheckedCreateWithoutCreatorInput>>
+    connectOrCreate?: Enumerable<ExercisesCreateOrConnectWithoutCreatorInput>
+    createMany?: ExercisesCreateManyCreatorInputEnvelope
+    connect?: Enumerable<ExercisesWhereUniqueInput>
+  }
+
   export type ExerciseProgressesCreateNestedOneWithoutUsersInput = {
     create?: XOR<ExerciseProgressesCreateWithoutUsersInput, ExerciseProgressesUncheckedCreateWithoutUsersInput>
     connectOrCreate?: ExerciseProgressesCreateOrConnectWithoutUsersInput
@@ -10337,6 +10434,13 @@ export namespace Prisma {
     connectOrCreate?: Enumerable<Users_WorkoutPlansCreateOrConnectWithoutUsersInput>
     createMany?: Users_WorkoutPlansCreateManyUsersInputEnvelope
     connect?: Enumerable<Users_WorkoutPlansWhereUniqueInput>
+  }
+
+  export type ExercisesUncheckedCreateNestedManyWithoutCreatorInput = {
+    create?: XOR<Enumerable<ExercisesCreateWithoutCreatorInput>, Enumerable<ExercisesUncheckedCreateWithoutCreatorInput>>
+    connectOrCreate?: Enumerable<ExercisesCreateOrConnectWithoutCreatorInput>
+    createMany?: ExercisesCreateManyCreatorInputEnvelope
+    connect?: Enumerable<ExercisesWhereUniqueInput>
   }
 
   export type ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput = {
@@ -10367,6 +10471,20 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type ExercisesUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<Enumerable<ExercisesCreateWithoutCreatorInput>, Enumerable<ExercisesUncheckedCreateWithoutCreatorInput>>
+    connectOrCreate?: Enumerable<ExercisesCreateOrConnectWithoutCreatorInput>
+    upsert?: Enumerable<ExercisesUpsertWithWhereUniqueWithoutCreatorInput>
+    createMany?: ExercisesCreateManyCreatorInputEnvelope
+    set?: Enumerable<ExercisesWhereUniqueInput>
+    disconnect?: Enumerable<ExercisesWhereUniqueInput>
+    delete?: Enumerable<ExercisesWhereUniqueInput>
+    connect?: Enumerable<ExercisesWhereUniqueInput>
+    update?: Enumerable<ExercisesUpdateWithWhereUniqueWithoutCreatorInput>
+    updateMany?: Enumerable<ExercisesUpdateManyWithWhereWithoutCreatorInput>
+    deleteMany?: Enumerable<ExercisesScalarWhereInput>
   }
 
   export type ExerciseProgressesUpdateOneWithoutUsersNestedInput = {
@@ -10415,6 +10533,20 @@ export namespace Prisma {
     update?: Enumerable<Users_WorkoutPlansUpdateWithWhereUniqueWithoutUsersInput>
     updateMany?: Enumerable<Users_WorkoutPlansUpdateManyWithWhereWithoutUsersInput>
     deleteMany?: Enumerable<Users_WorkoutPlansScalarWhereInput>
+  }
+
+  export type ExercisesUncheckedUpdateManyWithoutCreatorNestedInput = {
+    create?: XOR<Enumerable<ExercisesCreateWithoutCreatorInput>, Enumerable<ExercisesUncheckedCreateWithoutCreatorInput>>
+    connectOrCreate?: Enumerable<ExercisesCreateOrConnectWithoutCreatorInput>
+    upsert?: Enumerable<ExercisesUpsertWithWhereUniqueWithoutCreatorInput>
+    createMany?: ExercisesCreateManyCreatorInputEnvelope
+    set?: Enumerable<ExercisesWhereUniqueInput>
+    disconnect?: Enumerable<ExercisesWhereUniqueInput>
+    delete?: Enumerable<ExercisesWhereUniqueInput>
+    connect?: Enumerable<ExercisesWhereUniqueInput>
+    update?: Enumerable<ExercisesUpdateWithWhereUniqueWithoutCreatorInput>
+    updateMany?: Enumerable<ExercisesUpdateManyWithWhereWithoutCreatorInput>
+    deleteMany?: Enumerable<ExercisesScalarWhereInput>
   }
 
   export type ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput = {
@@ -10862,6 +10994,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesCreateNestedManyWithoutCreatorInput
     RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
@@ -10874,6 +11007,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesUncheckedCreateNestedManyWithoutCreatorInput
     RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
@@ -10890,12 +11024,14 @@ export namespace Prisma {
     description?: string | null
     muscle_group?: MuscleGroup | null
     exercise_type?: ExerciseType
+    creator: UsersCreateNestedOneWithoutCreatedExercisesInput
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansCreateNestedManyWithoutExercisesInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutExercisesInput
   }
 
   export type ExercisesUncheckedCreateWithoutExerciseProgressesInput = {
     id: string
+    createdBy: string
     name?: string
     description?: string | null
     muscle_group?: MuscleGroup | null
@@ -10921,6 +11057,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUpdateManyWithoutCreatorNestedInput
     RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
@@ -10933,6 +11070,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUncheckedUpdateManyWithoutCreatorNestedInput
     RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
@@ -10949,18 +11087,51 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
     exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
+    creator?: UsersUpdateOneRequiredWithoutCreatedExercisesNestedInput
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansUpdateManyWithoutExercisesNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutExercisesNestedInput
   }
 
   export type ExercisesUncheckedUpdateWithoutExerciseProgressesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
     exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansUncheckedUpdateManyWithoutExercisesNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutExercisesNestedInput
+  }
+
+  export type UsersCreateWithoutCreatedExercisesInput = {
+    id: string
+    username: string
+    email: string
+    created_at?: Date | string | null
+    profile_pic_uri?: string | null
+    password: string
+    ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
+    Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
+    Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
+  }
+
+  export type UsersUncheckedCreateWithoutCreatedExercisesInput = {
+    id: string
+    username: string
+    email: string
+    created_at?: Date | string | null
+    profile_pic_uri?: string | null
+    password: string
+    ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
+    RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
+    Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
+    Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
+  }
+
+  export type UsersCreateOrConnectWithoutCreatedExercisesInput = {
+    where: UsersWhereUniqueInput
+    create: XOR<UsersCreateWithoutCreatedExercisesInput, UsersUncheckedCreateWithoutCreatedExercisesInput>
   }
 
   export type ExerciseProgressesCreateWithoutExercisesInput = {
@@ -11023,6 +11194,37 @@ export namespace Prisma {
   export type Users_ExercisesCreateManyExercisesInputEnvelope = {
     data: Enumerable<Users_ExercisesCreateManyExercisesInput>
     skipDuplicates?: boolean
+  }
+
+  export type UsersUpsertWithoutCreatedExercisesInput = {
+    update: XOR<UsersUpdateWithoutCreatedExercisesInput, UsersUncheckedUpdateWithoutCreatedExercisesInput>
+    create: XOR<UsersCreateWithoutCreatedExercisesInput, UsersUncheckedCreateWithoutCreatedExercisesInput>
+  }
+
+  export type UsersUpdateWithoutCreatedExercisesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
+    Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
+    Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
+  }
+
+  export type UsersUncheckedUpdateWithoutCreatedExercisesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
+    RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
+    Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
+    Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
   }
 
   export type ExerciseProgressesUpsertWithoutExercisesInput = {
@@ -11105,12 +11307,14 @@ export namespace Prisma {
     description?: string | null
     muscle_group?: MuscleGroup | null
     exercise_type?: ExerciseType
+    creator: UsersCreateNestedOneWithoutCreatedExercisesInput
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutExercisesInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutExercisesInput
   }
 
   export type ExercisesUncheckedCreateWithoutExercises_WorkoutPlansInput = {
     id: string
+    createdBy: string
     name?: string
     description?: string | null
     muscle_group?: MuscleGroup | null
@@ -11154,12 +11358,14 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
     exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
+    creator?: UsersUpdateOneRequiredWithoutCreatedExercisesNestedInput
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutExercisesNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutExercisesNestedInput
   }
 
   export type ExercisesUncheckedUpdateWithoutExercises_WorkoutPlansInput = {
     id?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
@@ -11185,6 +11391,38 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutWorkoutPlansNestedInput
+  }
+
+  export type ExercisesCreateWithoutCreatorInput = {
+    id: string
+    name?: string
+    description?: string | null
+    muscle_group?: MuscleGroup | null
+    exercise_type?: ExerciseType
+    ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutExercisesInput
+    Exercises_WorkoutPlans?: Exercises_WorkoutPlansCreateNestedManyWithoutExercisesInput
+    Users_Exercises?: Users_ExercisesCreateNestedManyWithoutExercisesInput
+  }
+
+  export type ExercisesUncheckedCreateWithoutCreatorInput = {
+    id: string
+    name?: string
+    description?: string | null
+    muscle_group?: MuscleGroup | null
+    exercise_type?: ExerciseType
+    ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutExercisesInput
+    Exercises_WorkoutPlans?: Exercises_WorkoutPlansUncheckedCreateNestedManyWithoutExercisesInput
+    Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutExercisesInput
+  }
+
+  export type ExercisesCreateOrConnectWithoutCreatorInput = {
+    where: ExercisesWhereUniqueInput
+    create: XOR<ExercisesCreateWithoutCreatorInput, ExercisesUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type ExercisesCreateManyCreatorInputEnvelope = {
+    data: Enumerable<ExercisesCreateManyCreatorInput>
+    skipDuplicates?: boolean
   }
 
   export type ExerciseProgressesCreateWithoutUsersInput = {
@@ -11262,6 +11500,34 @@ export namespace Prisma {
   export type Users_WorkoutPlansCreateManyUsersInputEnvelope = {
     data: Enumerable<Users_WorkoutPlansCreateManyUsersInput>
     skipDuplicates?: boolean
+  }
+
+  export type ExercisesUpsertWithWhereUniqueWithoutCreatorInput = {
+    where: ExercisesWhereUniqueInput
+    update: XOR<ExercisesUpdateWithoutCreatorInput, ExercisesUncheckedUpdateWithoutCreatorInput>
+    create: XOR<ExercisesCreateWithoutCreatorInput, ExercisesUncheckedCreateWithoutCreatorInput>
+  }
+
+  export type ExercisesUpdateWithWhereUniqueWithoutCreatorInput = {
+    where: ExercisesWhereUniqueInput
+    data: XOR<ExercisesUpdateWithoutCreatorInput, ExercisesUncheckedUpdateWithoutCreatorInput>
+  }
+
+  export type ExercisesUpdateManyWithWhereWithoutCreatorInput = {
+    where: ExercisesScalarWhereInput
+    data: XOR<ExercisesUpdateManyMutationInput, ExercisesUncheckedUpdateManyWithoutCreatedExercisesInput>
+  }
+
+  export type ExercisesScalarWhereInput = {
+    AND?: Enumerable<ExercisesScalarWhereInput>
+    OR?: Enumerable<ExercisesScalarWhereInput>
+    NOT?: Enumerable<ExercisesScalarWhereInput>
+    id?: UuidFilter | string
+    createdBy?: UuidFilter | string
+    name?: StringFilter | string
+    description?: StringNullableFilter | string | null
+    muscle_group?: EnumMuscleGroupNullableFilter | MuscleGroup | null
+    exercise_type?: EnumExerciseTypeFilter | ExerciseType
   }
 
   export type ExerciseProgressesUpsertWithoutUsersInput = {
@@ -11351,12 +11617,14 @@ export namespace Prisma {
     description?: string | null
     muscle_group?: MuscleGroup | null
     exercise_type?: ExerciseType
+    creator: UsersCreateNestedOneWithoutCreatedExercisesInput
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutExercisesInput
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansCreateNestedManyWithoutExercisesInput
   }
 
   export type ExercisesUncheckedCreateWithoutUsers_ExercisesInput = {
     id: string
+    createdBy: string
     name?: string
     description?: string | null
     muscle_group?: MuscleGroup | null
@@ -11377,6 +11645,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
     RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
@@ -11389,6 +11658,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesUncheckedCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
     RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
@@ -11410,12 +11680,14 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
     exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
+    creator?: UsersUpdateOneRequiredWithoutCreatedExercisesNestedInput
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutExercisesNestedInput
     Exercises_WorkoutPlans?: Exercises_WorkoutPlansUpdateManyWithoutExercisesNestedInput
   }
 
   export type ExercisesUncheckedUpdateWithoutUsers_ExercisesInput = {
     id?: StringFieldUpdateOperationsInput | string
+    createdBy?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
@@ -11436,6 +11708,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
     RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
@@ -11448,6 +11721,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUncheckedUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
     RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
@@ -11460,6 +11734,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
     RefreshTokens?: RefreshTokensCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
@@ -11472,6 +11747,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesUncheckedCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
     RefreshTokens?: RefreshTokensUncheckedCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
@@ -11513,6 +11789,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
     RefreshTokens?: RefreshTokensUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
@@ -11525,6 +11802,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUncheckedUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
     RefreshTokens?: RefreshTokensUncheckedUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
@@ -11624,6 +11902,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansCreateNestedManyWithoutUsersInput
@@ -11636,6 +11915,7 @@ export namespace Prisma {
     created_at?: Date | string | null
     profile_pic_uri?: string | null
     password: string
+    createdExercises?: ExercisesUncheckedCreateNestedManyWithoutCreatorInput
     ExerciseProgresses?: ExerciseProgressesUncheckedCreateNestedOneWithoutUsersInput
     Users_Exercises?: Users_ExercisesUncheckedCreateNestedManyWithoutUsersInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedCreateNestedManyWithoutUsersInput
@@ -11658,6 +11938,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUpdateManyWithoutUsersNestedInput
@@ -11670,6 +11951,7 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profile_pic_uri?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
+    createdExercises?: ExercisesUncheckedUpdateManyWithoutCreatorNestedInput
     ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutUsersNestedInput
     Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutUsersNestedInput
     Users_WorkoutPlans?: Users_WorkoutPlansUncheckedUpdateManyWithoutUsersNestedInput
@@ -11707,12 +11989,50 @@ export namespace Prisma {
     Users_id?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ExercisesCreateManyCreatorInput = {
+    id: string
+    name?: string
+    description?: string | null
+    muscle_group?: MuscleGroup | null
+    exercise_type?: ExerciseType
+  }
+
   export type Users_ExercisesCreateManyUsersInput = {
     Exercises_id: string
   }
 
   export type Users_WorkoutPlansCreateManyUsersInput = {
     WorkoutPlans_id: string
+  }
+
+  export type ExercisesUpdateWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
+    exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
+    ExerciseProgresses?: ExerciseProgressesUpdateOneWithoutExercisesNestedInput
+    Exercises_WorkoutPlans?: Exercises_WorkoutPlansUpdateManyWithoutExercisesNestedInput
+    Users_Exercises?: Users_ExercisesUpdateManyWithoutExercisesNestedInput
+  }
+
+  export type ExercisesUncheckedUpdateWithoutCreatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
+    exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
+    ExerciseProgresses?: ExerciseProgressesUncheckedUpdateOneWithoutExercisesNestedInput
+    Exercises_WorkoutPlans?: Exercises_WorkoutPlansUncheckedUpdateManyWithoutExercisesNestedInput
+    Users_Exercises?: Users_ExercisesUncheckedUpdateManyWithoutExercisesNestedInput
+  }
+
+  export type ExercisesUncheckedUpdateManyWithoutCreatedExercisesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    muscle_group?: NullableEnumMuscleGroupFieldUpdateOperationsInput | MuscleGroup | null
+    exercise_type?: EnumExerciseTypeFieldUpdateOperationsInput | ExerciseType
   }
 
   export type Users_ExercisesUpdateWithoutUsersInput = {

@@ -99,6 +99,7 @@ exports.Prisma.ExerciseProgressesScalarFieldEnum = {
 
 exports.Prisma.ExercisesScalarFieldEnum = {
   id: 'id',
+  createdBy: 'createdBy',
   name: 'name',
   description: 'description',
   muscle_group: 'muscle_group',
@@ -159,7 +160,7 @@ exports.Prisma.WorkoutPlansScalarFieldEnum = {
 };
 exports.ExerciseType = {
   Cardio: 'Cardio',
-  Muscle: 'Muscle'
+  Strength: 'Strength'
 };
 
 exports.MuscleGroup = {

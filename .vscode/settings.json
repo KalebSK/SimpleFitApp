@@ -1,4 +1,7 @@
 {
     "deno.enable": true,
-    "deno.unstable": true
+    "deno.unstable": true,
+    "C_Cpp.errorSquiggles": "disabled",
+    "peacock.darkForegroundColor": "#44475a",
+    "peacock.squigglyBeGone": false
 }

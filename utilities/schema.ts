@@ -29,10 +29,42 @@ export const refreshSchema = z.object({
     })
 }).required();
 
+const muscleGroupEnum = z.enum(["Back", "Chest", "Legs", "Shoulders", "Arms", "Abs"])
+const exerciseTypeEnum = z.enum(["Cardio", "Strength"])
+
+export const createExerciseSchema = z.object({
+    headers: z.string(),
+    body: z.object({
+        name: z.string({required_error: 'Name is Required'}).max(52),
+        createdBy: z.string().uuid(),
+        description: z.string().nullable(),
+        musclegroup: muscleGroupEnum,
+        exercisetype: exerciseTypeEnum
+    })
+}).required();
+
 export const imagePngSchema = z.string().endsWith("png");
 export const imageJpegSchema = z.string().endsWith("jpeg");
+
+export const getUserExercisesSchema = z.object({
+    headers: z.string(),
+    body: z.object({
+        userId: z.string().uuid()
+    })
+}).required();
+
+export const addUserExerciseSchema = z.object({
+    headers: z.string(),
+    body: z.object({
+        userId: z.string().uuid(),
+        exerciseId: z.string().uuid(),
+    })
+}).required();
 
 export type SignUpInput = z.TypeOf<typeof signUpSchema>["body"];
 export type SignInInput = z.TypeOf<typeof loginSchema>["body"];
 export type refreshAuthInput = z.TypeOf<typeof refreshSchema>;
 export type ProfilePicUpdateInput = z.TypeOf<typeof profilePicSchema>["params"];
+export type CreateExerciseInput = z.TypeOf<typeof createExerciseSchema>["body"];
+export type getUserExercisesInput = z.TypeOf<typeof getUserExercisesSchema>["body"];
+export type addUserExerciseInput = z.TypeOf<typeof addUserExerciseSchema>["body"];

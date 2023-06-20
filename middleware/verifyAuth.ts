@@ -1,4 +1,4 @@
-import { verify } from "../utilities/deps.ts";
+import { Payload, verify } from "../utilities/deps.ts";
 import { key } from "../utilities/keyGenerator.ts";
 import { RouterContext } from "../utilities/deps.ts";
 import { Token } from "../utilities/types.ts";
@@ -15,7 +15,7 @@ export const verifyAuth = async (ctx: RouterContext<string>, next:() => any) : P
             }
             return;
         }
-        const accessTokenJwt = accessToken.split(' ')[1];
+        const accessTokenJwt: string = accessToken.split(' ')[1];
         if(!accessTokenJwt) {
             ctx.response.status = 406;
             ctx.response.body = {
@@ -23,7 +23,7 @@ export const verifyAuth = async (ctx: RouterContext<string>, next:() => any) : P
             }
             return;
         }
-        const payload = await verify(accessTokenJwt, key);
+        const payload: Payload = await verify(accessTokenJwt, key);
         if(!payload) {
             ctx.response.status = 406;
             ctx.response.body = {

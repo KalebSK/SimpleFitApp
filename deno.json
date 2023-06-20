@@ -1,9 +1,10 @@
 {
     "tasks": {
-        "migrate": "deno run -A --unstable npm:dotenv-cli -e .env.development && deno run -A --unstable npm:prisma migrate dev",
-        "deploy": "deno run -A --unstable npm:dotenv-cli -e .env.development && deno run -A --unstable npm:prisma migrate deploy",
-        "tests:migrate": "deno run -A --unstable npm:dotenv-cli -e .env.test && deno run -A --unstable npm:prisma migrate dev --skip-generate",
-        "tests:deploy": "deno run -A --unstable npm:dotenv-cli -e .env.test && deno run -A --unstable npm:prisma migrate deploy --skip-generate",
-        "generate": "deno run -A --unstable npm:dotenv-cli -e .env.development && deno run -A --unstable npm:prisma generate --data-proxy"
+        "migrate": "deno run -A --unstable npm:dotenv-cli -e .env.development -- deno run -A --unstable npm:prisma migrate dev",
+        "deploy": "deno run -A --unstable npm:dotenv-cli -e .env.development -- deno run -A --unstable npm:prisma migrate deploy",
+        "tests:migrate": "deno run -A --unstable npm:dotenv-cli -e .env.test -- deno run -A --unstable npm:prisma migrate dev --skip-generate",
+        "tests:deploy": "deno run -A --unstable npm:dotenv-cli -e .env.test -- deno run -A --unstable npm:prisma migrate deploy --skip-generate",
+        "rm-npm-cache": "rm -r $HOME/Caches/deno/npm",
+        "generate": "deno run -A --unstable npm:dotenv-cli -e .env.development -- deno run -A --unstable npm:prisma generate --data-proxy"
     }
 }
