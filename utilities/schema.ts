@@ -68,6 +68,15 @@ export const getExerciseByIdSchema = z.object({
     })
 })
 
+export const createWorkoutPlanSchema = z.object({
+    headers: z.string(),
+    body: z.object({
+        name: z.string().max(52),
+        description: z.string().nullable(),
+        
+    })
+})
+
 export type SignUpInput = z.TypeOf<typeof signUpSchema>["body"];
 export type SignInInput = z.TypeOf<typeof loginSchema>["body"];
 export type refreshAuthInput = z.TypeOf<typeof refreshSchema>;
