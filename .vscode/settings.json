@@ -3,5 +3,6 @@
     "deno.unstable": true,
     "C_Cpp.errorSquiggles": "disabled",
     "peacock.darkForegroundColor": "#44475a",
-    "peacock.squigglyBeGone": false
+    "peacock.squigglyBeGone": false,
+    "editor.fontSize": 16
 }

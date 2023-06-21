@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { RouterContext, fromZodError, ValidationError, isValidationErrorLike, z, helpers } from "./deps.ts";
+import { RouterContext, fromZodError, ValidationError, isValidationErrorLike, z, helpers } from "../utilities/deps.ts";
 
 export const validate = ( schema: z.AnyZodObject ) => 
     async (ctx: RouterContext<string>, next: () => any): Promise<void> => {

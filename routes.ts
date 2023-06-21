@@ -2,9 +2,9 @@
 import { refreshAuth, signIn, signUp, updateProfilePic } from "./controllers/user.controller.ts";
 import { Router } from "./utilities/deps.ts";
 import { verifyAuth } from "./middleware/verifyAuth.ts";
-import { validate } from "./utilities/validate.ts";
-import { createExerciseSchema, signUpSchema, loginSchema, refreshSchema, profilePicSchema, getUserExercisesSchema, addUserExerciseSchema } from "./utilities/schema.ts";
-import { addUserExercise, createExercise, getUserExercisesList } from "./controllers/exercise.controller.ts";
+import { validate } from "./middleware/validate.ts";
+import { createExerciseSchema, signUpSchema, loginSchema, refreshSchema, profilePicSchema, getUserExercisesSchema, addUserExerciseSchema, getExerciseByIdSchema } from "./utilities/schema.ts";
+import { addUserExercise, createExercise, getExerciseById, getUserExercisesList } from "./controllers/exercise.controller.ts";
 
 const router = new Router();
 
@@ -16,4 +16,5 @@ router
     .post("/exercise/create/", validate(createExerciseSchema),verifyAuth, createExercise)
     .get("/users/exercises/", validate(getUserExercisesSchema), verifyAuth, getUserExercisesList)
     .post("/users/exercises/", validate(addUserExerciseSchema), verifyAuth, addUserExercise) 
+    .get("/exercise/", validate(getExerciseByIdSchema), verifyAuth, getExerciseById)
 export default router;
