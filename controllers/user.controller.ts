@@ -7,7 +7,7 @@ import { ProcessFormData } from "../formDataProcessor.ts";
 import { verify } from "../utilities/deps.ts";
 import { getNumericDate ,ensureDir, move, Payload } from "../utilities/deps.ts";
 import { FormDataBody, Request, Response } from "https://deno.land/x/oak@v12.5.0/mod.ts";
-import { Users } from "../generated/client/index.d.ts";
+import { Users } from "../generated/client/deno/index.d.ts";
 import { Token, Id } from "../utilities/types.ts";
 export const signUp = async ({request, response}: RouterContext<string>) : Promise<void> => {
     try {

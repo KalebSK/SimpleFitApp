@@ -1,9 +1,9 @@
 import { Request, Response } from "https://deno.land/x/oak@v12.5.0/mod.ts";
 import { RouterContext } from "../utilities/deps.ts";
 import { CreateExerciseInput, AddUserExerciseInput, GetExerciseByIdInput, GetUserExercisesInput } from "../utilities/schema.ts";
-import { Exercises, Users_Exercises } from "../generated/client/index.d.ts";
+import { Exercises, Users_Exercises } from "../generated/client/deno/index.d.ts";
 import { prisma } from "../index.ts";
-import { Prisma } from "../generated/client/index.js";
+import { Prisma } from "../generated/client/deno/edge.js";
 
 export const createExercise = async(ctx: RouterContext<string>) => {
     const request: Request = ctx.request;

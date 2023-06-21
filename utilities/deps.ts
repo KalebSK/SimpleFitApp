@@ -15,3 +15,4 @@ export { assert, assertEquals } from "https://deno.land/std@0.191.0/testing/asse
 
 const env = await load();
 export const key = env['KEY'];
+export const rKey = env['RKEY'];
