@@ -36,7 +36,7 @@ export const verifyAuth = async (ctx: RouterContext<string>, next:() => any) : P
         ctx.response.status = 500;
         ctx.response.body = {
             message: 'server error.',
-            error: error.message
+            error: JSON.stringify(error.message)
         }
     }
 }

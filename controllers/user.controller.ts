@@ -96,9 +96,10 @@ export const signIn = async (ctx: RouterContext<string>) : Promise<void> => {
         if(error instanceof Prisma.PrismaClientKnownRequestError) {
             ctx.response.status = 400;
             ctx.response.body = {
-                status: error.code,
-                message: error.message
+                status: JSON.stringify(error.code),
+                message: JSON.stringify(error.message)
             }
+            return;
         }
         ctx.response.status = 500;
         ctx.response.body = {
@@ -151,7 +152,7 @@ export const refreshAuth = async(ctx: RouterContext<string>) : Promise<void> => 
         ctx.response.status = 406;
         ctx.response.body = {
             message: 'Unauthorized Request.',
-            error: error.message
+            error: JSON.stringify(error.message)
         }
     }
 }
@@ -203,15 +204,16 @@ export const updateProfilePic = async (ctx: RouterContext<string>) : Promise<voi
         if(error instanceof Prisma.PrismaClientKnownRequestError) {
             response.status = 400;
             response.body = {
-                status: error.code,
-                message: error.message
+                status: JSON.stringify(error.code),
+                message: JSON.stringify(error.message)
             }
+            return;
         }
 
         response.status = 400;
         response.body = {
             message: 'upload failed.',
-            error: error.message
+            error: JSON.stringify(error.message)
         }
     }
 

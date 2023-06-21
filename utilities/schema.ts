@@ -56,8 +56,8 @@ export const getUserExercisesSchema = z.object({
 export const addUserExerciseSchema = z.object({
     headers: z.string(),
     body: z.object({
-        userId: z.string().uuid(),
-        exerciseId: z.string().uuid(),
+        Users_id: z.string().uuid(),
+        Exercises_id: z.string().uuid(),
     })
 }).required();
 
@@ -73,9 +73,17 @@ export const createWorkoutPlanSchema = z.object({
     body: z.object({
         name: z.string().max(52),
         description: z.string().nullable(),
-        
+        createdBy: z.string().uuid()
     })
-})
+}).required();
+
+export const addUserWorkoutPlanSchema = z.object({
+    headers: z.string(),
+    body: z.object({
+        Users_id: z.string().uuid(),
+        WorkoutPlans_id: z.string().uuid(),
+    })
+}).required();
 
 export type SignUpInput = z.TypeOf<typeof signUpSchema>["body"];
 export type SignInInput = z.TypeOf<typeof loginSchema>["body"];
@@ -85,3 +93,5 @@ export type CreateExerciseInput = z.TypeOf<typeof createExerciseSchema>["body"];
 export type GetUserExercisesInput = z.TypeOf<typeof getUserExercisesSchema>["body"];
 export type AddUserExerciseInput = z.TypeOf<typeof addUserExerciseSchema>["body"];
 export type GetExerciseByIdInput = z.TypeOf<typeof getExerciseByIdSchema>["body"];
+export type CreateWorkoutPlanInput = z.TypeOf<typeof createWorkoutPlanSchema>["body"];
+export type AddUserWorkoutPlanInput = z.TypeOf<typeof addUserWorkoutPlanSchema>["body"];

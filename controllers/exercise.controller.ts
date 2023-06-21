@@ -15,26 +15,21 @@ export const createExercise = async(ctx: RouterContext<string>) => {
         const exercise: Exercises = await prisma.exercises.create({
             data: {id: id,...data }
         });
-        const _userExercise: Users_Exercises = await prisma.users_Exercises.create({data: {Users_id: data.createdBy, Exercises_id: id}});
-        response.status = 201;
-        response.body = {
-            message: 'exercise created.',
-            exercise: exercise
-        }
+        addUserExercise({Exercises_id: exercise.id, Users_id: exercise.createdBy})(ctx);
         
     } catch(error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError) {
             response.status = 409;
             response.body = {
-                code: error.code,
-                message: error.message,
+                code: JSON.stringify(error.code),
+                message: JSON.stringify(error.message),
             }
             return;
         }
         response.status = 500;
         response.body = {
             message: 'server error.',
-            error: error.message
+            error: JSON.stringify(error.message)
         }
 
     }
@@ -62,50 +57,53 @@ export const getUserExercisesList = async(ctx: RouterContext<string>) => {
         }
     } catch(error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError) {
-            response.status = 409;
-            response.body = {
-                code: error.code,
-                message: error.message,
-            }
-            return;
-        }
-        response.status = 500;
-        response.body = {
-            message: 'server error.',
-            error: error.message
-        }
-    }
-}
-
-export const addUserExercise = async(ctx: RouterContext<string>) => {
-    const request: Request = ctx.request;
-    const response: Response = ctx.response;
-
-    try {
-        const data: AddUserExerciseInput = await request.body({type: 'json'}).value;
-        const newUserExercise: Users_Exercises = await prisma.users_Exercises.create({data: {Users_id: data.userId, Exercises_id: data.exerciseId}})
-        response.status = 201;
-        response.body = {
-            message: `new exercise added for user: ${data.userId}`,
-            exercise: newUserExercise
-        }
-
-    } catch(error) {
-        if(error instanceof Prisma.PrismaClientKnownRequestError) {
             response.status = 409; 
             response.body = {
-                code: error.code,
-                message: error.message
+                code: JSON.stringify(error.code),
+                message: JSON.stringify(error.message)
             }
             return;
         }
         response.status = 500;
         response.body = {
-            message: 'server error.',
-            error: error.message
+            message: JSON.stringify(error.message)
         }
     }
 }
+
+export const addUserExercise = (data: AddUserExerciseInput = {Users_id: "", Exercises_id: ""}) =>
+    async(ctx: RouterContext<string>) => {
+        const request: Request = ctx.request;
+        const response: Response = ctx.response;
+        try {
+            if(data.Exercises_id === "" || data.Users_id === "") {
+                const reqData: AddUserExerciseInput = await request.body({type: 'json'}).value;
+                data['Exercises_id'] = reqData.Exercises_id;
+                data['Users_id'] = reqData.Users_id;
+            }
+            
+            const newUserExercise: Users_Exercises = await prisma.users_Exercises.create({data: {...data}})
+            response.status = 201;
+            response.body = {
+                message: `new exercise added for user: ${data.Users_id}`,
+                exercise: newUserExercise
+            }
+
+        } catch(error) {
+            if(error instanceof Prisma.PrismaClientKnownRequestError) {
+                response.status = 409; 
+                response.body = {
+                    code: JSON.stringify(error.code),
+                    message: JSON.stringify(error.message)
+                }
+                return;
+            }
+            response.status = 500;
+            response.body = {
+                message: JSON.stringify(error.message)
+            }
+        }
+    }
 
 export const getExerciseById = async(ctx: RouterContext<string>) => {
     const request: Request = ctx.request;
@@ -120,17 +118,16 @@ export const getExerciseById = async(ctx: RouterContext<string>) => {
         }
     } catch(error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError) {
-            response.status = 409;
+            response.status = 409; 
             response.body = {
-                code: error.code,
-                message: error.message
+                code: JSON.stringify(error.code),
+                message: JSON.stringify(error.message)
             }
             return;
         }
         response.status = 500;
         response.body = {
-            message: 'server error.',
-            error: error.message
+            message: JSON.stringify(error.message)
         }
     }
 }
