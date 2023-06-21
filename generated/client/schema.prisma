@@ -53,6 +53,7 @@ model Users {
   profile_pic_uri    String?
   password           String               @db.VarChar
   createdExercises   Exercises[]
+  createdWorkouts    WorkoutPlans[]
   ExerciseProgresses ExerciseProgresses?
   RefreshTokens      RefreshTokens?
   Users_Exercises    Users_Exercises[]
@@ -79,6 +80,8 @@ model Users_WorkoutPlans {
 
 model WorkoutPlans {
   id                     String                   @id @db.Uuid
+  createdBy              String                   @db.Uuid
+  creator                Users                    @relation(fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
   name                   String                   @db.VarChar(255)
   description            String?                  @default("a workout plan")
   Exercises_WorkoutPlans Exercises_WorkoutPlans[]

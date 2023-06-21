@@ -155,6 +155,7 @@ exports.Prisma.Users_WorkoutPlansScalarFieldEnum = {
 
 exports.Prisma.WorkoutPlansScalarFieldEnum = {
   id: 'id',
+  createdBy: 'createdBy',
   name: 'name',
   description: 'description'
 };
