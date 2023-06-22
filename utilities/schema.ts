@@ -1,4 +1,3 @@
-import { string } from "https://deno.land/x/zod@v3.21.4/types.ts";
 import { z } from "./deps.ts"
 const PASSWORD_VALIDATOR = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s])(?!.*\s).{8,32}$/;
 
