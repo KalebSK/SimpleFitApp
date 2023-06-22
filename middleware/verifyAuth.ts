@@ -31,6 +31,7 @@ export const verifyAuth = async (ctx: RouterContext<string>, next:() => any) : P
             }
             return;
         }
+        
         await next();
     } catch(error) {
         ctx.response.status = 500;
