@@ -40,17 +40,10 @@ export const getUserExercisesList = async(ctx: RouterContext<string>) => {
     const response: Response = ctx.response;
 
     try {
-        const data: GetUserExercisesInput = await request.body({type: 'json'}).value;
-        const userExercises: Users_Exercises[] = await prisma.users_Exercises.findMany({where: {Users_id: data.userId }});
-        const userExList: Exercises[] = new Array<Exercises>();
-        
-        for(const userEx of userExercises) {
-            const exercise = await prisma.exercises.findFirst({where: {id: userEx.Exercises_id}})
-            if(!exercise) {
-                continue;
-            }
-            userExList.push(exercise);
-        }
+        const data: GetUserExercisesInput = await request.body({type: 'json'}).value;        
+        const userExercises: Users_Exercises[] = await prisma.users.findUniqueOrThrow({where: {id: data.userId}}).Users_Exercises();
+        const exerciseIds: string[] = userExercises.map((x) => x.Exercises_id);
+        const userExList: Exercises[] = await prisma.exercises.findMany({where: {id: {in: exerciseIds}}})
         response.status = 201;
         response.body = {
             exercises: userExList
@@ -105,29 +98,35 @@ export const addUserExercise = (data: AddUserExerciseInput = {Users_id: "", Exer
         }
     }
 
-export const getExerciseById = async(ctx: RouterContext<string>) => {
-    const request: Request = ctx.request;
-    const response: Response = ctx.response;
+export const getExerciseById = (data: GetExerciseByIdInput = {exerciseId: ""}) => 
+    async(ctx: RouterContext<string>) : Promise<void | Exercises> => {
+        const request: Request = ctx.request;
+        const response: Response = ctx.response;
 
-    try {
-        const data: GetExerciseByIdInput = await request.body({type: 'json'}).value;
-        const exercise: Exercises = await prisma.exercises.findFirstOrThrow({where: {id: data.exerciseId}});
-        response.status = 200;
-        response.body = {
-            exercise: exercise
-        }
-    } catch(error) {
-        if(error instanceof Prisma.PrismaClientKnownRequestError) {
-            response.status = 409; 
+        try {
+            if(data.exerciseId === "") {
+                data = await request.body({type: 'json'}).value;
+                const exercise: Exercises = await prisma.exercises.findFirstOrThrow({where: {id: data.exerciseId}});
+                response.status = 200;
+                response.body = {
+                    exercise: exercise
+                }
+                return;
+            }
+            const exercise: Exercises = await prisma.exercises.findFirstOrThrow({where: {id: data.exerciseId}});
+            return exercise;
+        } catch(error) {
+            if(error instanceof Prisma.PrismaClientKnownRequestError) {
+                response.status = 409; 
+                response.body = {
+                    code: JSON.stringify(error.code),
+                    message: JSON.stringify(error.message)
+                }
+                return;
+            }
+            response.status = 500;
             response.body = {
-                code: JSON.stringify(error.code),
                 message: JSON.stringify(error.message)
             }
-            return;
         }
-        response.status = 500;
-        response.body = {
-            message: JSON.stringify(error.message)
-        }
-    }
 }

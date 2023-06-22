@@ -3,9 +3,9 @@ import { refreshAuth, signIn, signUp, updateProfilePic } from "./controllers/use
 import { Router } from "./utilities/deps.ts";
 import { verifyAuth } from "./middleware/verifyAuth.ts";
 import { validate } from "./middleware/validate.ts";
-import { createExerciseSchema, signUpSchema, loginSchema, refreshSchema, profilePicSchema, getUserExercisesSchema, addUserExerciseSchema, getExerciseByIdSchema, createWorkoutPlanSchema, addUserWorkoutPlanSchema } from "./utilities/schema.ts";
+import { createExerciseSchema, signUpSchema, loginSchema, refreshSchema, profilePicSchema, getUserExercisesSchema, addUserExerciseSchema, getExerciseByIdSchema, createWorkoutPlanSchema, addUserWorkoutPlanSchema, getWorkoutPlanByIdSchema, getUserWorkoutPlanSchema } from "./utilities/schema.ts";
 import { addUserExercise, createExercise, getExerciseById, getUserExercisesList } from "./controllers/exercise.controller.ts";
-import { addUserWorkoutPlan, createWorkoutPlan } from "./controllers/workout.controller.ts";
+import { addUserWorkoutPlan, createWorkoutPlan, getUserWorkoutsList, getWorkoutPlanById } from "./controllers/workout.controller.ts";
 
 const router = new Router();
 
@@ -17,7 +17,9 @@ router
     .post("/exercise/create/", validate(createExerciseSchema),verifyAuth, createExercise)
     .get("/users/exercises/", validate(getUserExercisesSchema), verifyAuth, getUserExercisesList)
     .post("/users/exercises/", validate(addUserExerciseSchema), verifyAuth, addUserExercise()) 
-    .get("/exercise/", validate(getExerciseByIdSchema), verifyAuth, getExerciseById)
+    .get("/exercise/", validate(getExerciseByIdSchema), verifyAuth, getExerciseById())
     .post("/workoutplan/create/", validate(createWorkoutPlanSchema), verifyAuth, createWorkoutPlan)
     .post("/users/workoutplan/", validate(addUserWorkoutPlanSchema), verifyAuth, addUserWorkoutPlan())
+    .get("/workoutplan/", validate(getWorkoutPlanByIdSchema), verifyAuth, getWorkoutPlanById())
+    .get("/users/workoutplan/", validate(getUserWorkoutPlanSchema), verifyAuth, getUserWorkoutsList)
 export default router;

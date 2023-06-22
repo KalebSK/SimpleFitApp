@@ -1,3 +1,4 @@
+import { string } from "https://deno.land/x/zod@v3.21.4/types.ts";
 import { z } from "./deps.ts"
 const PASSWORD_VALIDATOR = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s])(?!.*\s).{8,32}$/;
 
@@ -85,6 +86,20 @@ export const addUserWorkoutPlanSchema = z.object({
     })
 }).required();
 
+export const getWorkoutPlanByIdSchema = z.object({
+    headers: z.string(),
+    body: z.object({
+        WorkoutPlans_id: z.string().uuid()
+    })
+}).required();
+
+export const getUserWorkoutPlanSchema = z.object({
+    headers: z.string(),
+    body: z.object({
+        Users_id: z.string().uuid()
+    })
+}).required();
+
 export type SignUpInput = z.TypeOf<typeof signUpSchema>["body"];
 export type SignInInput = z.TypeOf<typeof loginSchema>["body"];
 export type refreshAuthInput = z.TypeOf<typeof refreshSchema>;
@@ -95,3 +110,5 @@ export type AddUserExerciseInput = z.TypeOf<typeof addUserExerciseSchema>["body"
 export type GetExerciseByIdInput = z.TypeOf<typeof getExerciseByIdSchema>["body"];
 export type CreateWorkoutPlanInput = z.TypeOf<typeof createWorkoutPlanSchema>["body"];
 export type AddUserWorkoutPlanInput = z.TypeOf<typeof addUserWorkoutPlanSchema>["body"];
+export type GetWorkoutPlanByIdInput = z.TypeOf<typeof getWorkoutPlanByIdSchema>["body"];
+export type GetUserWorkoutPlanInput = z.TypeOf<typeof getUserWorkoutPlanSchema>["body"];
